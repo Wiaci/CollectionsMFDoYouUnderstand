@@ -36,7 +36,7 @@ public class StudyGroup {
         } while (!idList.contains(id));
         idList.add(id);
 
-        // add {P3131 5 3 27 4,8 FULL_TIME_EDUCATION SIXTH VENIAMIN_KONDRATIEV}
+        // add {P3131 5 3 27 4.8 FULL_TIME_EDUCATION SIXTH VENIAMIN_KONDRATIEV}
     }
 
     @Override

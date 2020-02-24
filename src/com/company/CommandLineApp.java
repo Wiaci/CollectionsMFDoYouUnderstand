@@ -13,6 +13,9 @@ public class CommandLineApp {
         while (!newCommand.equals("exit")) {
             newCommand = scan.nextLine();
             List<String> atomicCommand = asList(newCommand.trim().replace("{", "").replace("}", "").split(" "));
+            for (String i: atomicCommand) {
+                System.out.println(i);
+            }
             switch (atomicCommand.get(0)) {
                 case "help":
                     fairy.help();
