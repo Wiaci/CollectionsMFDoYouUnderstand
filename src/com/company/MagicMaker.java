@@ -27,18 +27,30 @@ public class MagicMaker {
 
     public List<String> filler(List<String> com) {
         if (!(com.contains("FULL_TIME_EDUCATION") || com.contains("DISTANCE_EDUCATION") || com.contains("EVENING_CLASSES"))) {
+            int i = com.size() - 1;
+            while (i != 5) {
+                com.set(i + 1, com.get(i));
+                i--;
+            }
             com.set(6, null);
         }
         if (!(com.contains("FIFTH") || com.contains("SIXTH") || com.contains("FOURTH") || com.contains("EIGHTH"))) {
+            int i = com.size() - 1;
+            while (i != 6) {
+                com.set(i + 1, com.get(i));
+                i--;
+            }
             com.set(7, null);
         }
         return com;
     }
 
     public void add(List<String> elem) {
+        System.out.println(elem);
         elem = filler(elem);
-        list.add(new StudyGroup(elem.get(1), new Coordinates(elem.get(2), elem.get(3)), elem.get(4), elem.get(5),
-                                elem.get(6), elem.get(7), new Person(elem.get(8))));
+        System.out.println(elem);
+        list.add(new StudyGroup(elem.get(1), new Coordinates(elem.get(2), elem.get(3)), elem.get(4), elem.get(5), elem.get(6), elem.get(7), new Person(elem.get(8))));
+        System.out.println(elem);
     }
 
 

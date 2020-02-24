@@ -9,9 +9,9 @@ public class Person {
 
     public Person(String name) {
         this.name = name;
-        this.weight = weight;
+        /*this.weight = weight;
         this.passportID = passportID;
-        this.eyeColor = eyeColor;
+        this.eyeColor = eyeColor;*/
     }
 }
 // Japan - 61/51
