@@ -21,15 +21,21 @@ public class StudyGroup {
         this.averageMark = Float.parseFloat(averageMark);
         this.groupAdmin = groupAdmin;
         switch (formOfEducation) {
-            case "DISTANCE_EDUCATION": this.formOfEducation = FormOfEducation.DISTANCE_EDUCATION;
-            case "FULL_TIME_EDUCATION": this.formOfEducation = FormOfEducation.FULL_TIME_EDUCATION;
-            case "EVENING_CLASSES": this.formOfEducation = FormOfEducation.EVENING_CLASSES;
+            case "DISTANCE_EDUCATION":
+                this.formOfEducation = FormOfEducation.DISTANCE_EDUCATION;
+                break;
+            case "FULL_TIME_EDUCATION":
+                this.formOfEducation = FormOfEducation.FULL_TIME_EDUCATION;
+                break;
+            case "EVENING_CLASSES":
+                this.formOfEducation = FormOfEducation.EVENING_CLASSES;
+                break;
         }
         switch (semesterEnum) {
-            case "FOURTH": this.semesterEnum = Semester.FOURTH;
-            case "FIFTH": this.semesterEnum = Semester.FIFTH;
-            case "SIXTH": this.semesterEnum = Semester.SIXTH;
-            case "EIGHTH": this.semesterEnum = Semester.EIGHTH;
+            case "FOURTH": this.semesterEnum = Semester.FOURTH; break;
+            case "FIFTH": this.semesterEnum = Semester.FIFTH; break;
+            case "SIXTH": this.semesterEnum = Semester.SIXTH; break;
+            case "EIGHTH": this.semesterEnum = Semester.EIGHTH; break;
         }
         do {
             id = (long) (Math.random() * 10000 + 1);
