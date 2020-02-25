@@ -30,6 +30,11 @@ public class MagicMaker {
                                                          elem[7], new Person(elem[8])));
         System.out.println("jkjkj");
     }
+    public void show(){
+        for(StudyGroup elem : list){
+            System.out.println(list.element() + System.lineSeparator());
+        }
+    }
 
 
 

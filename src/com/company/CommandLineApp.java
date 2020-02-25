@@ -20,6 +20,9 @@ public class CommandLineApp {
                 case "help":
                     fairy.help();
                     break;
+                case "show":
+                    fairy.show();//что записать в скобочки?Это вообще правильная конструкция?
+                    break;
                 case "add":
                     fairy.add(atomicCommand);
                     break;
