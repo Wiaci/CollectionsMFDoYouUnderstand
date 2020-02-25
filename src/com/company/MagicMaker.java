@@ -1,5 +1,5 @@
 package com.company;
-
+//
 import java.util.*;
 
 public class MagicMaker {
@@ -27,6 +27,7 @@ public class MagicMaker {
 
     public List<String> filler(List<String> com) {
         if (!(com.contains("FULL_TIME_EDUCATION") || com.contains("DISTANCE_EDUCATION") || com.contains("EVENING_CLASSES"))) {
+            com.add(null);
             int i = com.size() - 1;
             while (i != 5) {
                 com.set(i + 1, com.get(i));
@@ -35,6 +36,7 @@ public class MagicMaker {
             com.set(6, null);
         }
         if (!(com.contains("FIFTH") || com.contains("SIXTH") || com.contains("FOURTH") || com.contains("EIGHTH"))) {
+            com.add(null);
             int i = com.size() - 1;
             while (i != 6) {
                 com.set(i + 1, com.get(i));
