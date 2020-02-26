@@ -1,9 +1,12 @@
 package com.company;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 
 @XmlType(name = "person")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Person {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private float weight; //Значение поля должно быть больше 0
@@ -11,6 +14,8 @@ public class Person {
     private Color eyeColor; //Поле может быть null
     private Country nationality; //Поле не может быть null
     private static ArrayList<String> passportIDList = new ArrayList<>();
+
+    public Person() {};
 
     public Person(String name) {
         this.name = name;
@@ -33,12 +38,16 @@ public class Person {
         switch ((int) (Math.random() * 4)) {
             case 0:
                 nationality = Country.FRANCE;
+                break;
             case 1:
                 nationality = Country.INDIA;
+                break;
             case 2:
                 nationality = Country.JAPAN;
+                break;
             case 3:
                 nationality = Country.SPAIN;
+                break;
         }
         passportID = "";
         do {
