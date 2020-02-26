@@ -24,6 +24,15 @@ public class MagicMaker {
         StudyGroup.clearIdList();
         Person.clearPassportIdList();
     }
+    public void remove_by_id(String id){
+        long convertedId = Integer.parseInt (id);
+        for(int i = 0; i <= list.size(); i++){
+            if(list.get(i).getId()== convertedId){
+                list.remove(i);
+                break;
+            }
+        }
+    }
 
     public void help() {
         System.out.println(
