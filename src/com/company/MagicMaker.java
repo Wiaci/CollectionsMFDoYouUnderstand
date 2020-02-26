@@ -79,6 +79,14 @@ public class MagicMaker {
             }
         }
     }
+    public void remove_greater(String students) {
+        long studentsCount = Integer.parseInt (students);
+        for(int i = 0; i < list.size() ; i++){
+            if(list.get(i).getStudentsCount() > studentsCount){
+                list.remove(i);
+            }
+        }
+    }
 
     public void help() {
         System.out.println(
@@ -99,7 +107,6 @@ public class MagicMaker {
                         "    count_less_than_form_of_education formOfEducation : вывести количество элементов, значение поля formOfEducation которых меньше заданного\n" +
                         "    print_field_ascending_semester_enum semesterEnum : вывести значения поля semesterEnum в порядке возрастания");
     }
-
 
 
 

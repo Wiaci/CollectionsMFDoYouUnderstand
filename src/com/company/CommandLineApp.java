@@ -49,14 +49,17 @@ public class CommandLineApp {
                 case "info" :
                     fairy.info();
                     break;
-                case "average_of_average_mark":
-                    fairy.average_of_average_mark();
-                    break;
                 case "clear":
                     fairy.clear();
                     break;
                 case "remove_by_id":
                     fairy.remove_by_id(atomicCommand[1]);
+                    break;
+                case "average_of_average_mark":
+                    fairy.average_of_average_mark();
+                    break;
+                case "remove_greater" :
+                    fairy.remove_greater(atomicCommand[1]);
                     break;
                 case "save" :
                     try {
