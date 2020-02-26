@@ -79,10 +79,10 @@ public class MagicMaker {
             }
         }
     }
-    public void remove_greater(String students) {
-        long studentsCount = Integer.parseInt (students);
-        for(int i = 0; i < list.size() ; i++){
-            if(list.get(i).getStudentsCount() > studentsCount){
+    public void remove_greater(String[] elem) {
+        long studentsCount = Long.parseLong(elem[4]);
+        for (int i = list.size() - 1; i >= 0; i--) {
+            if (list.get(i).getStudentsCount() > studentsCount) {
                 list.remove(i);
             }
         }

@@ -59,7 +59,7 @@ public class CommandLineApp {
                     fairy.average_of_average_mark();
                     break;
                 case "remove_greater" :
-                    fairy.remove_greater(atomicCommand[1]);
+                    fairy.remove_greater(atomicCommand);
                     break;
                 case "save" :
                     try {

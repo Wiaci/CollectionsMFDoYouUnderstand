@@ -1,6 +1,7 @@
 package com.company;
 
 import javax.xml.bind.annotation.*;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
 /*@XmlRootElement*/
@@ -11,7 +12,7 @@ public class StudyGroup {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
     /*@XmlAttribute*/
-    /*private java.time.ZonedDateTime creationDate;*/ //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private Long studentsCount; //Значение поля должно быть больше 0, Поле может быть null
     private float averageMark; //Значение поля должно быть больше 0
     private FormOfEducation formOfEducation; //Поле может быть null
@@ -25,7 +26,7 @@ public class StudyGroup {
     public StudyGroup(String name, Coordinates coordinates, String studentsCount, String averageMark, String formOfEducation, String semesterEnum, Person groupAdmin) {
         this.name = name;
         this.coordinates = coordinates;
-        /*creationDate = new ZonedDateTime.now();*/
+        creationDate = ZonedDateTime.now();
         this.studentsCount = Long.parseLong(studentsCount);
         this.averageMark = Float.parseFloat(averageMark);
         this.groupAdmin = groupAdmin;
@@ -54,7 +55,7 @@ public class StudyGroup {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", coordinates=" + coordinates +
-                ", creationDate=" + /*creationDate +*/
+                ", creationDate=" + creationDate +
                 ", studentsCount=" + studentsCount +
                 ", averageMark=" + averageMark +
                 ", formOfEducation=" + formOfEducation +
@@ -72,10 +73,12 @@ public class StudyGroup {
     }
 
     public Long getId(){ return id; }
-    public float getAverageMark(){ return averageMark; }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public float getAverageMark() {
+        return averageMark;
+    }
 }
