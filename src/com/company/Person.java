@@ -1,7 +1,9 @@
 package com.company;
 
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 
+@XmlType(name = "person")
 public class Person {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private float weight; //Значение поля должно быть больше 0

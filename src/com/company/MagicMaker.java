@@ -1,11 +1,28 @@
 package com.company;
 
 import java.util.*;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.StringWriter;
 
 public class MagicMaker {
     LinkedList<StudyGroup> list = new LinkedList<>();
     Date dateOfInitialization = new Date();
+    StringWriter writer = new StringWriter();
+    JAXBContext context = JAXBContext.newInstance(StudyGroup.class);
+    Marshaller marshaller = context.createMarshaller();
     private final StudentsCountComparator studentsCountComparator = new StudentsCountComparator();
+
+    public MagicMaker() throws JAXBException {
+    }
+
+    public void save() throws JAXBException {
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        marshaller.marshal(list.get(0), writer);
+        String result = writer.toString();
+        System.out.println(result);
+    }
 
     public void add(String[] elem) {
         list.add(new StudyGroup(elem[1], new Coordinates(elem[2], elem[3]), elem[4], elem[5], elem[6],
@@ -18,6 +35,11 @@ public class MagicMaker {
             System.out.println(list.get(i));
         }
     }
+
+    public void head() {
+        System.out.println(list.get(0));
+    }
+
 
     public void clear() {
         list.clear();

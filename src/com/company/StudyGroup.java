@@ -1,7 +1,11 @@
 package com.company;
 
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 
+@XmlRootElement
+@XmlType(name = "studyGroup")
 public class StudyGroup {
     private  Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
@@ -13,6 +17,9 @@ public class StudyGroup {
     private Semester semesterEnum; //Поле может быть null
     private Person groupAdmin; //Поле не может быть null
     private static ArrayList<Long> idList = new ArrayList<>();
+
+    public StudyGroup() {
+    }
 
     public StudyGroup(String name, Coordinates coordinates, String studentsCount, String averageMark, String formOfEducation, String semesterEnum, Person groupAdmin) {
         this.name = name;
