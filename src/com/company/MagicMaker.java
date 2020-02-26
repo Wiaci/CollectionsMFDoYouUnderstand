@@ -5,7 +5,7 @@ import java.util.*;
 public class MagicMaker {
     LinkedList<StudyGroup> list = new LinkedList<>();
     Date dateOfInitialization = new Date();
-    private StudentsCountComparator studentsCountComparator = new StudentsCountComparator();
+    private final StudentsCountComparator studentsCountComparator = new StudentsCountComparator();
 
     public void add(String[] elem) {
         list.add(new StudyGroup(elem[1], new Coordinates(elem[2], elem[3]), elem[4], elem[5], elem[6],
