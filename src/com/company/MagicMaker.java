@@ -13,7 +13,7 @@ import javax.xml.bind.annotation.*;
 public class MagicMaker {
     @XmlElement
     LinkedList<StudyGroup> list = new LinkedList<>();
-
+    @XmlElement
     Date dateOfInitialization = new Date();
     private final StudentsCountComparator studentsCountComparator = new StudentsCountComparator();
 
@@ -26,6 +26,23 @@ public class MagicMaker {
         list.sort(studentsCountComparator);
     }
 
+    public void update(String[] elem) {
+        remove_by_id(elem[1]);
+        list.add(new StudyGroup(elem[2], new Coordinates(elem[3], elem[4]), elem[5], elem[6], elem[7],
+                elem[8], new Person(elem[9])));
+        list.getLast().setId(Long.parseLong(elem[1]));
+        list.sort(studentsCountComparator);
+    }
+
+    public void average_of_average_mark() {
+        float allMarks = 0;
+        for(int i = 0; i < list.size(); i++) {
+            allMarks+= list.get(i).getAverageMark();
+        }
+        float average = allMarks/list.size();
+        System.out.printf("%.2f", average);
+    }
+
     public void show(){
         for(int i = 0; i < list.size(); i++){
             System.out.println(list.get(i));
@@ -34,6 +51,12 @@ public class MagicMaker {
 
     public void head() {
         System.out.println(list.get(0));
+    }
+
+    public void info() {
+        System.out.println(dateOfInitialization);
+        System.out.println(list.get(0).getClass());
+        System.out.println(list.size());
     }
 
     public void clear() {

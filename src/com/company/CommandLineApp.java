@@ -40,6 +40,12 @@ public class CommandLineApp {
                 case "add":
                     fairy.add(atomicCommand);
                     break;
+                case "info" :
+                    fairy.info();
+                    break;
+                case "average_of_average_mark":
+                    fairy.average_of_average_mark();
+                    break;
                 case "clear":
                     fairy.clear();
                     break;
