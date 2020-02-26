@@ -34,6 +34,12 @@ public class MagicMaker {
         list.sort(studentsCountComparator);
     }
 
+    public void add_if_max(String[] elem) {
+        if (Long.parseLong(elem[4]) > list.getLast().getStudentsCount()) {
+            add(elem);
+        }
+    }
+
     public void average_of_average_mark() {
         float allMarks = 0;
         for(int i = 0; i < list.size(); i++) {

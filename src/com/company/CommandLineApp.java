@@ -40,6 +40,12 @@ public class CommandLineApp {
                 case "add":
                     fairy.add(atomicCommand);
                     break;
+                case "update" :
+                    fairy.update(atomicCommand);
+                    break;
+                case "add_if_max" :
+                    fairy.add_if_max(atomicCommand);
+                    break;
                 case "info" :
                     fairy.info();
                     break;
