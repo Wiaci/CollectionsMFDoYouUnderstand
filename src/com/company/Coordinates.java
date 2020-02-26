@@ -8,4 +8,12 @@ public class Coordinates {
         this.x = Integer.parseInt(x);
         this.y = Integer.parseInt(y);
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }

@@ -13,9 +13,6 @@ public class CommandLineApp {
         while (!newCommand.equals("exit")) {
             newCommand = scan.nextLine();
             String[] atomicCommand = newCommand.trim().replace("{", "").replace("}", "").split(" ");
-            for (String i: atomicCommand) {
-                System.out.println(i);
-            }
             switch (atomicCommand[0]) {
                 case "help":
                     fairy.help();
@@ -25,6 +22,9 @@ public class CommandLineApp {
                     break;
                 case "add":
                     fairy.add(atomicCommand);
+                    break;
+                case "clear":
+                    fairy.clear();
                     break;
                 case "exit":
                     break;
