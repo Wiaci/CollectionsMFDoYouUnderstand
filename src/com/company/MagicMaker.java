@@ -1,10 +1,7 @@
 package com.company;
 
-import java.io.*;
 import java.util.*;
-import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
@@ -19,6 +16,10 @@ public class MagicMaker {
 
     public MagicMaker() throws JAXBException {
     }
+
+    /*private String[] filler(String[] elem) {
+        if (!(el)
+    }*/
 
     public void add(String[] elem) {
         list.add(new StudyGroup(elem[1], new Coordinates(elem[2], elem[3]), elem[4], elem[5], elem[6],
