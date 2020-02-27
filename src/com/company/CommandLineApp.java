@@ -51,10 +51,10 @@ public class CommandLineApp {
                 case "info" :
                     fairy.info();
                     break;
-                case "clear":
-                    fairy.clear();
-                    break;
-                case "remove_by_id":
+            case "print_field_ascending_semester_enum" :
+                fairy.print_field_ascending_semester_enum();
+                break;
+            case "remove_by_id":
                     fairy.remove_by_id(atomicCommand[1]);
                     break;
                 case "average_of_average_mark":
@@ -63,6 +63,7 @@ public class CommandLineApp {
                 case "remove_greater" :
                     fairy.remove_greater(atomicCommand);
                     break;
+
             case "execute_script" :
                 try {
                     execute_script(atomicCommand[1]);

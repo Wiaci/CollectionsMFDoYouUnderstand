@@ -47,7 +47,7 @@ public class MagicMaker {
             allMarks+= list.get(i).getAverageMark();
         }
         float average = allMarks/list.size();
-        System.out.printf("%.2f", average);
+        System.out.printf("%.1f", average);
     }
 
     public void show(){
@@ -70,6 +70,11 @@ public class MagicMaker {
         list.clear();
         StudyGroup.clearIdList();
         Person.clearPassportIdList();
+    }
+    public void print_field_ascending_semester_enum() {
+
+        Semester[] semester = Semester.values();
+        System.out.println(Arrays.toString(semester));
     }
     public void remove_by_id(String id){
         long convertedId = Integer.parseInt (id);
