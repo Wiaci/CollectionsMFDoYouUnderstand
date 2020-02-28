@@ -1,7 +1,6 @@
 package com.company;
 
 import java.util.*;
-import javax.xml.bind.JAXBException;
 import javax.xml.bind.annotation.*;
 
 @XmlRootElement
@@ -12,32 +11,197 @@ public class MagicMaker {
     LinkedList<StudyGroup> list = new LinkedList<>();
     @XmlElement
     Date dateOfInitialization = new Date();
+    Scanner scan = new Scanner(System.in);
     private final StudentsCountComparator studentsCountComparator = new StudentsCountComparator();
 
-    public MagicMaker() throws JAXBException {
+    public MagicMaker() {};
+
+    private StudyGroup getStudyGroup() {
+        String name;
+        int x;
+        int y;
+        Long studentsCount;
+        float averageMark;
+        FormOfEducation formOfEducation = null;
+        Semester semester = null;
+        String adminName;
+        float weight;
+        String passportId;
+        Color eyeColor = null;
+        Country nationality = null;
+        do {
+            System.out.print("Введите имя группы: ");
+            name = scan.nextLine();
+            if (name.equals("")) {
+                System.out.println("Строка не может быть пустой");
+            }
+        } while (name.equals(""));
+
+        do {
+            System.out.print("Введите координату x: ");
+            String line = scan.nextLine();
+            if (line.matches("\\d+")) {
+                x = Integer.parseInt(line);
+                break;
+            }
+            System.out.println("Формат ввода неверный");
+        } while (true);
+
+        do {
+            System.out.print("Введите координату y: ");
+            String line = scan.nextLine();
+            if (line.matches("\\d+") && Integer.parseInt(line) > -791) {
+                y = Integer.parseInt(line);
+                break;
+            }
+            System.out.println("Формат ввода неверный");
+        } while (true);
+
+        do {
+            System.out.print("Введите количество студентов в группе: ");
+            String line = scan.nextLine();
+            if (line.matches("\\d*")) {
+                studentsCount = Long.parseLong(line);
+                break;
+            }
+            System.out.println("Формат ввода неверный");
+        } while (true);
+
+        do {
+            System.out.print("Введите средний балл студентов: ");
+            String line = scan.nextLine();
+            if (line.matches("\\d*\\.?\\d+")) {
+                averageMark = Float.parseFloat(line);
+                break;
+            }
+            System.out.println("Формат ввода неверный");
+        } while (true);
+
+        do {
+            System.out.print("Введите форму обучения: ");
+            String line = scan.nextLine();
+            boolean isFit = true;
+            switch (line) {
+                case "" : break;
+                case "FULL_TIME_EDUCATION" : formOfEducation = FormOfEducation.FULL_TIME_EDUCATION; break;
+                case "DISTANCE_EDUCATION" : formOfEducation = FormOfEducation.DISTANCE_EDUCATION; break;
+                case "EVENING_CLASSES" : formOfEducation = FormOfEducation.EVENING_CLASSES; break;
+                default :
+                    System.out.println("Такой формы обучения нет");
+                    isFit = false;
+            }
+            if (isFit) { break; }
+        } while (true);
+
+        do {
+            System.out.print("Введите номер семестра: ");
+            String line = scan.nextLine();
+            boolean isFit = true;
+            switch (line) {
+                case "" : break;
+                case "EIGHTH" : semester = Semester.EIGHTH; break;
+                case "FIFTH" : semester = Semester.FIFTH; break;
+                case "FOURTH" : semester = Semester.FOURTH; break;
+                case "SIXTH" : semester = Semester.SIXTH; break;
+                default :
+                    System.out.println("Такого номера семестра нет");
+                    isFit = false;
+            }
+            if (isFit) { break; }
+        } while (true);
+
+        do {
+            System.out.print("Введите имя админа группы: ");
+            adminName = scan.nextLine();
+            if (adminName.equals("")) {
+                System.out.println("Строка не может быть пустой");
+            }
+        } while (adminName.equals(""));
+
+        do {
+            System.out.print("Введите вес админа: ");
+            String line = scan.nextLine();
+            if (line.matches("\\d*\\.?\\d+")) {
+                weight = Float.parseFloat(line);
+                break;
+            }
+            System.out.println("Формат ввода неверный");
+        } while (true);
+
+        do {
+            System.out.print("Введите passportID админа: ");
+            String line = scan.nextLine();
+            if (line.matches(".{5,20}") || line.equals("")) {
+                if (!Person.getPassportIDList().contains(line)) {
+                    passportId = line;
+                    break;
+                }
+                else {
+                    System.out.println("Админ с таким passportId уже существует");
+                }
+            }
+            System.out.println("Слишком длинный/короткий passportId");
+        } while (true);
+
+        do {
+            System.out.print("Введите цвет глаз админа: ");
+            String line = scan.nextLine();
+            boolean isFit = true;
+            switch (line) {
+                case "" : break;
+                case "BROWN" : eyeColor = Color.BROWN; break;
+                case "ORANGE" : eyeColor = Color.ORANGE; break;
+                case "RED" : eyeColor = Color.RED; break;
+                case "YELLOW" : eyeColor = Color.YELLOW; break;
+                default :
+                    System.out.println("Формат ввода неверный");
+                    isFit = false;
+            }
+            if (isFit) { break; }
+        } while (true);
+
+        do {
+            System.out.print("Введите национальность админа: ");
+            String line = scan.nextLine();
+            boolean isFit = true;
+            switch (line) {
+                case "INDIA" : nationality = Country.INDIA; break;
+                case "FRANCE" : nationality = Country.FRANCE; break;
+                case "JAPAN" : nationality = Country.JAPAN; break;
+                case "SPAIN" : nationality = Country.SPAIN; break;
+                default :
+                    System.out.println("Такой страны нет");
+                    isFit = false;
+            }
+            if (isFit) { break; }
+        } while (true);
+        return new StudyGroup(name, new Coordinates(x, y), studentsCount, averageMark, formOfEducation, semester,
+                                new Person(adminName, weight, passportId, eyeColor, nationality));
     }
 
-    /*private String[] filler(String[] elem) {
-        if (!(el)
-    }*/
-
-    public void add(String[] elem) {
-        list.add(new StudyGroup(elem[1], new Coordinates(elem[2], elem[3]), elem[4], elem[5], elem[6],
-                                                         elem[7], new Person(elem[8])));
+    public void add() {
+        list.add(getStudyGroup());
         list.sort(studentsCountComparator);
+        System.out.println("Группа добавлена");
     }
 
-    public void update(String[] elem) {
-        remove_by_id(elem[1]);
-        list.add(new StudyGroup(elem[2], new Coordinates(elem[3], elem[4]), elem[5], elem[6], elem[7],
-                elem[8], new Person(elem[9])));
-        list.getLast().setId(Long.parseLong(elem[1]));
-        list.sort(studentsCountComparator);
+    public void update(String id) {
+        if (id.matches("\\d+") && StudyGroup.getIdList().contains(Long.parseLong(id))) {
+            remove_by_id(id);
+            list.add(getStudyGroup());
+            list.getLast().setId(Long.parseLong(id));
+            list.sort(studentsCountComparator);
+            System.out.println("Группа по id " + id + "обновлена");
+        }
+        else {
+            System.out.println("Группы с таким id нет");
+        }
     }
 
-    public void add_if_max(String[] elem) {
-        if (Long.parseLong(elem[4]) > list.getLast().getStudentsCount()) {
-            add(elem);
+    public void add_if_max() {
+        StudyGroup studyGroup = getStudyGroup();
+        if (list.size() != 0 && studyGroup.getStudentsCount() > list.getLast().getStudentsCount()) {
+            list.add(studyGroup);
         }
     }
 
@@ -50,20 +214,30 @@ public class MagicMaker {
         System.out.printf("%.2f", average);
     }
 
-    public void show(){
-        for(int i = 0; i < list.size(); i++){
-            System.out.println(list.get(i));
+    public void show() {
+        if (list.size() != 0) {
+            for (StudyGroup studyGroup : list) {
+                System.out.println(studyGroup);
+            }
+        }
+        else {
+            System.out.println("Коллекция пуста");
         }
     }
 
     public void head() {
-        System.out.println(list.get(0));
+        if (list.size() != 0) {
+            System.out.println(list.getFirst());
+        }
+        else {
+            System.out.println("Коллекция пуста");
+        }
     }
 
     public void info() {
-        System.out.println(dateOfInitialization);
-        System.out.println(list.get(0).getClass());
-        System.out.println(list.size());
+        System.out.println("Дата иницализации коллекции: " + dateOfInitialization);
+        System.out.println("Тип коллекции: LinkedList");
+        System.out.println("Количество элементов в коллекции: " + list.size());
     }
 
     public void clear() {
@@ -72,7 +246,7 @@ public class MagicMaker {
         Person.clearPassportIdList();
     }
     public void remove_by_id(String id){
-        long convertedId = Integer.parseInt (id);
+        long convertedId = Long.parseLong(id);
         for(int i = 0; i <= list.size(); i++){
             if(list.get(i).getId()== convertedId){
                 list.remove(i);
@@ -80,10 +254,10 @@ public class MagicMaker {
             }
         }
     }
-    public void remove_greater(String[] elem) {
-        long studentsCount = Long.parseLong(elem[4]);
+    public void remove_greater() {
+        StudyGroup studyGroup = getStudyGroup();
         for (int i = list.size() - 1; i >= 0; i--) {
-            if (list.get(i).getStudentsCount() > studentsCount) {
+            if (list.get(i).getStudentsCount() > studyGroup.getStudentsCount()) {
                 list.remove(i);
             }
         }
@@ -108,7 +282,4 @@ public class MagicMaker {
                         "    count_less_than_form_of_education formOfEducation : вывести количество элементов, значение поля formOfEducation которых меньше заданного\n" +
                         "    print_field_ascending_semester_enum semesterEnum : вывести значения поля semesterEnum в порядке возрастания");
     }
-
-
-
 }

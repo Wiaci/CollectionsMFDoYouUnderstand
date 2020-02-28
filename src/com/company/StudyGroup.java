@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.*;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 
-/*@XmlRootElement*/
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "studyGroup")
 public class StudyGroup {
@@ -19,33 +18,25 @@ public class StudyGroup {
     private Person groupAdmin; //Поле не может быть null
     private static ArrayList<Long> idList = new ArrayList<>();
 
-    public StudyGroup() {
+    public StudyGroup() {};
+
+    public static ArrayList<Long> getIdList() {
+        return idList;
     }
 
-    public StudyGroup(String name, Coordinates coordinates, String studentsCount, String averageMark, String formOfEducation, String semesterEnum, Person groupAdmin) {
+    public StudyGroup(String name, Coordinates coordinates, Long studentsCount, float averageMark, FormOfEducation formOfEducation, Semester semesterEnum, Person groupAdmin) {
         this.name = name;
         this.coordinates = coordinates;
-        creationDate = ZonedDateTime.now();
-        this.studentsCount = Long.parseLong(studentsCount);
-        this.averageMark = Float.parseFloat(averageMark);
+        this.studentsCount = studentsCount;
+        this.averageMark = averageMark;
+        this.formOfEducation = formOfEducation;
+        this.semesterEnum = semesterEnum;
         this.groupAdmin = groupAdmin;
-        switch (formOfEducation) {
-            case "DISTANCE_EDUCATION": this.formOfEducation = FormOfEducation.DISTANCE_EDUCATION; break;
-            case "FULL_TIME_EDUCATION": this.formOfEducation = FormOfEducation.FULL_TIME_EDUCATION; break;
-            case "EVENING_CLASSES": this.formOfEducation = FormOfEducation.EVENING_CLASSES; break;
-        }
-        switch (semesterEnum) {
-            case "FOURTH": this.semesterEnum = Semester.FOURTH;break;
-            case "FIFTH": this.semesterEnum = Semester.FIFTH; break;
-            case "SIXTH": this.semesterEnum = Semester.SIXTH; break;
-            case "EIGHTH": this.semesterEnum = Semester.EIGHTH; break;
-        }
+        creationDate = ZonedDateTime.now();
         do {
             id = (long) (Math.random() * 10000 + 1);
         } while (idList.contains(id));
         idList.add(id);
-
-        // add {P3131 5 3 27 4.8 FULL_TIME_EDUCATION SIXTH VENIAMIN_KONDRATIEV}
     }
 
     @Override
@@ -61,6 +52,10 @@ public class StudyGroup {
                 ", semesterEnum=" + semesterEnum +
                 ", groupAdmin=" + groupAdmin +
                 '}';
+    }
+
+    public Person getGroupAdmin() {
+        return groupAdmin;
     }
 
     public static void clearIdList() {

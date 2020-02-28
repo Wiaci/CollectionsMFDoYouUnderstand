@@ -10,9 +10,9 @@ public class Coordinates {
     private int x;
     private Integer y; //Значение поля должно быть больше -791, Поле не может быть null
 
-    public Coordinates(String x, String y) {
-        this.x = Integer.parseInt(x);
-        this.y = Integer.parseInt(y);
+    public Coordinates(int x, Integer y) {
+        this.x = x;
+        this.y = y;
     }
 
     public Coordinates() {};
