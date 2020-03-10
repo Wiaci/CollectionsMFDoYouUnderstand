@@ -15,57 +15,26 @@ public class Person {
     private Country nationality; //Поле не может быть null
     private static ArrayList<String> passportIDList = new ArrayList<>();
 
+    public static ArrayList<String> getPassportIDList() {
+        return passportIDList;
+    }
+
     public Person() {};
 
-    public Person(String name) {
+    public Person(String name, float weight, String passportID, Color eyeColor, Country nationality) {
         this.name = name;
-        weight = (float) (Math.random() * 40 + 40);
-        int eyeColorDeterminer = (int) (Math.random() * 5);
-        switch (eyeColorDeterminer) {
-            case 1:
-                eyeColor = Color.BROWN;
-                break;
-            case 2:
-                eyeColor = Color.ORANGE;
-                break;
-            case 3:
-                eyeColor = Color.RED;
-                break;
-            case 4:
-                eyeColor = Color.YELLOW;
-                break;
-        }
-        switch ((int) (Math.random() * 4)) {
-            case 0:
-                nationality = Country.FRANCE;
-                break;
-            case 1:
-                nationality = Country.INDIA;
-                break;
-            case 2:
-                nationality = Country.JAPAN;
-                break;
-            case 3:
-                nationality = Country.SPAIN;
-                break;
-        }
-        passportID = "";
-        do {
-            int passportIdLength = (int) (Math.random() * 5 + 6);
-            for (int i = 0; i < passportIdLength; i++) {
-                int charInDec = (int) (Math.random() * 36 + 48);
-                if (charInDec >= 58) {
-                    charInDec += 7;
-                }
-                char newRandomDigitOrLetter = (char) charInDec;
-                passportID += newRandomDigitOrLetter;
-            }
-        } while (passportIDList.contains(passportID));
-        passportIDList.add(passportID);
+        this.weight = weight;
+        this.passportID = passportID;
+        this.eyeColor = eyeColor;
+        this.nationality = nationality;
     }
 
     public static void clearPassportIdList() {
         passportIDList.clear();
+    }
+
+    public String getPassportID() {
+        return passportID;
     }
 
     @Override
