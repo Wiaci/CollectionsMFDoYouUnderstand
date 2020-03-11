@@ -313,13 +313,19 @@ public class MagicMaker {
     }
     public void remove_by_id(String id){
         long convertedId = Long.parseLong(id);
-        for(int i = 0; i <= list.size(); i++){
-            if(list.get(i).getId()== convertedId) {
+        if(convertedId < 1 || convertedId > 9999 ) {
+            System.out.println("Будьте любезны ввести верный id.");
+        }
+          else {
+              for (int i = 0; i <= list.size(); i++) {
+                if (list.get(i).getId() == convertedId) {
                 list.remove(i);
                 break;
-            }
-        }
+                }
+              }
+          }
     }
+
     public void remove_greater(Scanner scan) throws IOException {
         StudyGroup studyGroup = getStudyGroup(scan);
         for (int i = list.size() - 1; i >= 0; i--) {
@@ -330,7 +336,24 @@ public class MagicMaker {
     }
 
     public void count_less_than_form_of_education(String foe) {
-        FormOfEducation a = FormOfEducation.valueOf(foe);
+        int amount=0;
+        if(foe == "FULL_TIME_EDUCATION"){
+            for(StudyGroup studyGroup : list){
+                if(foe == "DISTANCE_EDUCATION" || foe == "EVENING_CLASSES"){
+                    amount++;
+                }
+            }
+        }
+        else if(foe == "EVENING_CLASSES"){
+            for(StudyGroup studyGroup : list){
+                if(foe == "DISTANCE_EDUCATION" ){
+                    amount++;
+                }
+            }
+        }
+        else {
+            System.out.println( amount + " элементов меньше заданного.");
+        }
     }
 
     public void help() {
