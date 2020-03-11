@@ -19,7 +19,7 @@ public class Person {
         return passportIDList;
     }
 
-    public Person() {};
+    private Person() {};
 
     public Person(String name, float weight, String passportID, Color eyeColor, Country nationality) {
         this.name = name;

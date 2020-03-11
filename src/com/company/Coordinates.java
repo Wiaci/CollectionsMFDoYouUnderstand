@@ -15,7 +15,7 @@ public class Coordinates {
         this.y = y;
     }
 
-    public Coordinates() {};
+    private Coordinates() {};
 
     @Override
     public String toString() {

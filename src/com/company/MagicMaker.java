@@ -11,12 +11,17 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "list")
 public class MagicMaker {
     @XmlElement
-    LinkedList<StudyGroup> list = new LinkedList<>();
+    private LinkedList<StudyGroup> list = new LinkedList<>();
+
     @XmlElement
-    Date dateOfInitialization = new Date();
+    private Date dateOfInitialization = new Date();
     private final StudentsCountComparator studentsCountComparator = new StudentsCountComparator();
 
     public MagicMaker() {};
+
+    public LinkedList<StudyGroup> getList() {
+        return list;
+    }
 
     private StudyGroup getStudyGroup(Scanner scan) throws IOException { // true - работа со скриптом, false - с потоком ввода
         String name;

@@ -25,7 +25,8 @@ public class StudyGroup {
         return idList;
     }
 
-    public StudyGroup(String name, Coordinates coordinates, Long studentsCount, float averageMark, FormOfEducation formOfEducation, Semester semesterEnum, Person groupAdmin) {
+    public StudyGroup(String name, Coordinates coordinates, Long studentsCount, float averageMark,
+                      FormOfEducation formOfEducation, Semester semesterEnum, Person groupAdmin) {
         this.name = name;
         this.coordinates = coordinates;
         this.studentsCount = studentsCount;

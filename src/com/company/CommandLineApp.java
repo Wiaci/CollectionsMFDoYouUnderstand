@@ -8,13 +8,13 @@ import java.io.*;
 import java.util.*;
 
 public class CommandLineApp { // Ломается, если ввести например remove_by_id
-    MagicMaker fairy;
+    private MagicMaker fairy;
 
-    String newCommand = "";
+    private String newCommand = "";
 
     public CommandLineApp() {
         try (Reader r = new FileReader("src/com/company/collectionStorage.xml");
-             Reader bf = new BufferedReader(r);) {
+             Reader bf = new BufferedReader(r)) {
             JAXBContext context = JAXBContext.newInstance(MagicMaker.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             fairy = (MagicMaker) unmarshaller.unmarshal(bf);
@@ -27,7 +27,7 @@ public class CommandLineApp { // Ломается, если ввести нап�
         } catch (IOException e) {
             e.printStackTrace();
         }
-        for (StudyGroup i : fairy.list) {
+        for (StudyGroup i : fairy.getList()) {
             StudyGroup.getIdList().add(i.getId());
             Person.getPassportIDList().add(i.getGroupAdmin().getPassportID());
         }
@@ -103,8 +103,8 @@ public class CommandLineApp { // Ломается, если ввести нап�
     }
 
     private void execute_script(String filename) throws IOException {
-        File file = new File("src/com/company/" + filename);
-        Scanner scan = new Scanner(file);
+        Reader r = new FileReader("src/com/company/" + filename);
+        Scanner scan = new Scanner(r);
         String line = scan.nextLine();
         while (true) {
             System.out.println(line);
@@ -124,7 +124,6 @@ public class CommandLineApp { // Ломается, если ввести нап�
              Writer bw = new BufferedWriter(w)) {
             JAXBContext context = JAXBContext.newInstance(MagicMaker.class);
             Marshaller marshaller = context.createMarshaller();
-            File file = new File("src/com/company/collectionStorage.xml");
             marshaller.marshal(fairy, bw);
         } catch (JAXBException e) {
             System.out.println("Сохранение невозможно");
