@@ -25,6 +25,7 @@ public class Person {
         this.name = name;
         this.weight = weight;
         this.passportID = passportID;
+        passportIDList.add(passportID);
         this.eyeColor = eyeColor;
         this.nationality = nationality;
     }

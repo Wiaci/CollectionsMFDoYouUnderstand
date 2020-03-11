@@ -1,5 +1,8 @@
 package com.company;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.*;
 import javax.xml.bind.annotation.*;
 
@@ -11,12 +14,11 @@ public class MagicMaker {
     LinkedList<StudyGroup> list = new LinkedList<>();
     @XmlElement
     Date dateOfInitialization = new Date();
-    Scanner scan = new Scanner(System.in);
     private final StudentsCountComparator studentsCountComparator = new StudentsCountComparator();
 
     public MagicMaker() {};
 
-    private StudyGroup getStudyGroup() {
+    private StudyGroup getStudyGroup(Scanner scan) throws IOException { // true - работа со скриптом, false - с потоком ввода
         String name;
         int x;
         int y;
@@ -29,6 +31,7 @@ public class MagicMaker {
         String passportId;
         Color eyeColor = null;
         Country nationality = null;
+        int tries = 0;
         do {
             System.out.print("Введите имя группы: ");
             name = scan.nextLine();
@@ -44,9 +47,13 @@ public class MagicMaker {
                 x = Integer.parseInt(line);
                 break;
             }
+            if (++tries > 3) {
+                throw new IOException();
+            }
             System.out.println("Формат ввода неверный");
         } while (true);
 
+        tries = 0;
         do {
             System.out.print("Введите координату y: ");
             String line = scan.nextLine();
@@ -54,9 +61,13 @@ public class MagicMaker {
                 y = Integer.parseInt(line);
                 break;
             }
+            if (++tries > 3) {
+                throw new IOException();
+            }
             System.out.println("Формат ввода неверный");
         } while (true);
 
+        tries = 0;
         do {
             System.out.print("Введите количество студентов в группе: ");
             String line = scan.nextLine();
@@ -64,9 +75,12 @@ public class MagicMaker {
                 studentsCount = Long.parseLong(line);
                 break;
             }
+            if (++tries > 3) {
+                throw new IOException();
+            }
             System.out.println("Формат ввода неверный");
         } while (true);
-
+        tries = 0;
         do {
             System.out.print("Введите средний балл студентов: ");
             String line = scan.nextLine();
@@ -74,9 +88,13 @@ public class MagicMaker {
                 averageMark = Float.parseFloat(line);
                 break;
             }
+            if (++tries > 3) {
+                throw new IOException();
+            }
             System.out.println("Формат ввода неверный");
         } while (true);
 
+        tries = 0;
         do {
             System.out.print("Введите форму обучения: ");
             String line = scan.nextLine();
@@ -89,10 +107,14 @@ public class MagicMaker {
                 default :
                     System.out.println("Такой формы обучения нет");
                     isFit = false;
+                    if (++tries > 3) {
+                        throw new IOException();
+                    }
             }
             if (isFit) { break; }
         } while (true);
 
+        tries = 0;
         do {
             System.out.print("Введите номер семестра: ");
             String line = scan.nextLine();
@@ -106,18 +128,26 @@ public class MagicMaker {
                 default :
                     System.out.println("Такого номера семестра нет");
                     isFit = false;
+                    if (++tries > 3) {
+                        throw new IOException();
+                    }
             }
             if (isFit) { break; }
         } while (true);
 
+        tries = 0;
         do {
             System.out.print("Введите имя админа группы: ");
             adminName = scan.nextLine();
+            if (++tries > 3) {
+                throw new IOException();
+            }
             if (adminName.equals("")) {
                 System.out.println("Строка не может быть пустой");
             }
         } while (adminName.equals(""));
 
+        tries = 0;
         do {
             System.out.print("Введите вес админа: ");
             String line = scan.nextLine();
@@ -125,9 +155,13 @@ public class MagicMaker {
                 weight = Float.parseFloat(line);
                 break;
             }
+            if (++tries > 3) {
+                throw new IOException();
+            }
             System.out.println("Формат ввода неверный");
         } while (true);
 
+        tries = 0;
         do {
             System.out.print("Введите passportID админа: ");
             String line = scan.nextLine();
@@ -138,11 +172,16 @@ public class MagicMaker {
                 }
                 else {
                     System.out.println("Админ с таким passportId уже существует");
+                    continue;
                 }
+            }
+            if (++tries > 3) {
+                throw new IOException();
             }
             System.out.println("Слишком длинный/короткий passportId");
         } while (true);
 
+        tries = 0;
         do {
             System.out.print("Введите цвет глаз админа: ");
             String line = scan.nextLine();
@@ -156,10 +195,14 @@ public class MagicMaker {
                 default :
                     System.out.println("Формат ввода неверный");
                     isFit = false;
+                    if (++tries > 3) {
+                        throw new IOException();
+                    }
             }
             if (isFit) { break; }
         } while (true);
 
+        tries = 0;
         do {
             System.out.print("Введите национальность админа: ");
             String line = scan.nextLine();
@@ -172,6 +215,9 @@ public class MagicMaker {
                 default :
                     System.out.println("Такой страны нет");
                     isFit = false;
+                    if (++tries > 3) {
+                        throw new IOException();
+                    }
             }
             if (isFit) { break; }
         } while (true);
@@ -179,16 +225,16 @@ public class MagicMaker {
                                 new Person(adminName, weight, passportId, eyeColor, nationality));
     }
 
-    public void add() {
-        list.add(getStudyGroup());
+    public void add(Scanner scan) throws IOException {
+        list.add(getStudyGroup(scan));
         list.sort(studentsCountComparator);
         System.out.println("Группа добавлена");
     }
 
-    public void update(String id) {
+    public void update(String id, Scanner scan) throws IOException {
         if (id.matches("\\d+") && StudyGroup.getIdList().contains(Long.parseLong(id))) {
             remove_by_id(id);
-            list.add(getStudyGroup());
+            list.add(getStudyGroup(scan));
             list.getLast().setId(Long.parseLong(id));
             list.sort(studentsCountComparator);
             System.out.println("Группа по id " + id + "обновлена");
@@ -198,8 +244,8 @@ public class MagicMaker {
         }
     }
 
-    public void add_if_max() {
-        StudyGroup studyGroup = getStudyGroup();
+    public void add_if_max(Scanner scan) throws IOException {
+        StudyGroup studyGroup = getStudyGroup(scan);
         if (list.size() != 0 && studyGroup.getStudentsCount() > list.getLast().getStudentsCount()) {
             list.add(studyGroup);
         }
@@ -207,10 +253,10 @@ public class MagicMaker {
 
     public void average_of_average_mark() {
         float allMarks = 0;
-        for(int i = 0; i < list.size(); i++) {
-            allMarks+= list.get(i).getAverageMark();
+        for (StudyGroup studyGroup : list) {
+            allMarks += studyGroup.getAverageMark();
         }
-        float average = allMarks/list.size();
+        float average = allMarks / list.size();
         System.out.printf("%.1f", average);
     }
 
@@ -253,19 +299,23 @@ public class MagicMaker {
     public void remove_by_id(String id){
         long convertedId = Long.parseLong(id);
         for(int i = 0; i <= list.size(); i++){
-            if(list.get(i).getId()== convertedId){
+            if(list.get(i).getId()== convertedId) {
                 list.remove(i);
                 break;
             }
         }
     }
-    public void remove_greater() {
-        StudyGroup studyGroup = getStudyGroup();
+    public void remove_greater(Scanner scan) throws IOException {
+        StudyGroup studyGroup = getStudyGroup(scan);
         for (int i = list.size() - 1; i >= 0; i--) {
             if (list.get(i).getStudentsCount() > studyGroup.getStudentsCount()) {
                 list.remove(i);
             }
         }
+    }
+
+    public void count_less_than_form_of_education(String foe) {
+        FormOfEducation a = FormOfEducation.valueOf(foe);
     }
 
     public void help() {

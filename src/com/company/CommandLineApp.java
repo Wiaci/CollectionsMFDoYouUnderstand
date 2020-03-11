@@ -7,8 +7,7 @@ import javax.xml.bind.Unmarshaller;
 import java.io.*;
 import java.util.*;
 
-public class CommandLineApp {
-    Scanner scan = new Scanner(System.in);
+public class CommandLineApp { // Ломается, если ввести например remove_by_id
     MagicMaker fairy;
 
     String newCommand = "";
@@ -32,13 +31,18 @@ public class CommandLineApp {
     }
 
     public void go() {
+        Scanner scan = new Scanner(System.in);
         while (!newCommand.equals("exit")) {
             newCommand = scan.nextLine();
             String[] atomicCommand = newCommand.split(" ");
-            launchCommand(atomicCommand);
+            try {
+                launchCommand(atomicCommand, scan);
+            } catch (IOException e) {
+                System.out.println("Такого файла нет");
+            }
         }
     }
-    private void launchCommand(String[] atomicCommand) {
+    private void launchCommand(String[] atomicCommand, Scanner scan) throws IOException {
         switch (atomicCommand[0]) {
             case "" :
             case "exit":
@@ -53,13 +57,13 @@ public class CommandLineApp {
                 fairy.show();
                 break;
             case "add":
-                fairy.add();
+                fairy.add(scan);
                 break;
             case "update" :
-                fairy.update(atomicCommand[1]);
+                fairy.update(atomicCommand[1], scan);
                 break;
             case "add_if_max" :
-                fairy.add_if_max();
+                fairy.add_if_max(scan);
                 break;
             case "info" :
                 fairy.info();
@@ -74,8 +78,10 @@ public class CommandLineApp {
                 fairy.average_of_average_mark();
                 break;
             case "remove_greater" :
-                    fairy.remove_greater();
-                    break;
+                fairy.remove_greater(scan);
+                break;
+            case "qqq" :
+                fairy.count_less_than_form_of_education(atomicCommand[1]);
             case "execute_script" :
                 try {
                     execute_script(atomicCommand[1]);
@@ -96,14 +102,21 @@ public class CommandLineApp {
 
     private void execute_script(String filename) throws IOException {
         File file = new File("src/com/company/" + filename);
-        FileReader fileReader = new FileReader(file);
+        /*FileReader fileReader = new FileReader(file);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line = bufferedReader.readLine();
-        while (line != null) {
+        String line = bufferedReader.readLine();*/
+        Scanner scan = new Scanner(file);
+        String line = scan.nextLine();
+        while (true) {
             System.out.println(line);
             String[] atomicCommand = line.trim().replace("{", "").replace("}", "").split(" ");
-            launchCommand(atomicCommand);
-            line = bufferedReader.readLine();
+            launchCommand(atomicCommand, scan);
+            if (scan.hasNext()) {
+                line = scan.nextLine();
+            }
+            else {
+                break;
+            }
         }
     }
 

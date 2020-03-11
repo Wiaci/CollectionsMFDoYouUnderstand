@@ -1,7 +1,19 @@
 show
-add {P3131 5 3 27 4.8 FULL_TIME_EDUCATION SIXTH VENIAMIN_KONDRATIEV}
-add_if_max {P3131 1 6 35 4.3 FULL_TIME_EDUCATION SIXTH ABRAHAM_LINCOLN}
+add
+dkjnd
+5
+6
+87
+4.2
+
+
+svsdv
+1235
+dffdbdfkjn
+
+FRANCE
+
 show
-clear
+
 save
 exit
