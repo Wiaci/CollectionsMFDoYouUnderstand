@@ -1,7 +1,5 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 import javax.xml.bind.annotation.*;
@@ -9,12 +7,15 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType(name = "list")
+/** Класс, ответственный за выполнение команд
+ * @param list Коллекция групп
+ * **/
 public class MagicMaker {
     @XmlElement
     private LinkedList<StudyGroup> list = new LinkedList<>();
 
     @XmlElement
-    private Date dateOfInitialization = new Date();
+    private final Date dateOfInitialization = new Date();
     private final StudentsCountComparator studentsCountComparator = new StudentsCountComparator();
 
     public MagicMaker() {};

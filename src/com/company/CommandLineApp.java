@@ -37,7 +37,7 @@ public class CommandLineApp { // Ломается, если ввести нап�
         Scanner scan = new Scanner(System.in);
         while (!newCommand.equals("exit")) {
             newCommand = scan.nextLine();
-            String[] atomicCommand = newCommand.split(" ");
+            String[] atomicCommand = newCommand.trim().split(" ");
             try {
                 launchCommand(atomicCommand, scan);
             } catch (IOException e) {
@@ -66,7 +66,11 @@ public class CommandLineApp { // Ломается, если ввести нап�
                 fairy.add();
                 break;
             case "update" :
-                fairy.update(atomicCommand[1], scan);
+                if (atomicCommand.length > 1) {
+                    fairy.update(atomicCommand[1], scan);
+                } else {
+                    System.out.println("Неверный формат ввода команды. Для справки введите \"help\"");
+                }
                 break;
             case "add_if_max" :
                 fairy.add_if_max(scan);
@@ -78,7 +82,11 @@ public class CommandLineApp { // Ломается, если ввести нап�
                 fairy.clear();
                 break;
             case "remove_by_id":
-                fairy.remove_by_id(atomicCommand[1]);
+                if (atomicCommand.length > 1) {
+                    fairy.remove_by_id(atomicCommand[1]);
+                } else {
+                    System.out.println("Неверный формат ввода команды. Для справки введите \"help\"");
+                }
                 break;
             case "average_of_average_mark":
                 fairy.average_of_average_mark();
