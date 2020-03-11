@@ -13,16 +13,19 @@ public class CommandLineApp { // Ломается, если ввести нап�
     String newCommand = "";
 
     public CommandLineApp() {
-        File file = new File("src/com/company/collectionStorage.xml");
-        try {
+        try (Reader r = new FileReader("src/com/company/collectionStorage.xml");
+             Reader bf = new BufferedReader(r);) {
             JAXBContext context = JAXBContext.newInstance(MagicMaker.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
-            fairy = (MagicMaker) unmarshaller.unmarshal(file);
-        }
-        catch(JAXBException e) {
-            System.out.println("Файл, содержащий коллекцию, отсутствует или недоступен для программы.\n" +
+            fairy = (MagicMaker) unmarshaller.unmarshal(bf);
+        } catch (FileNotFoundException e) {
+            System.out.println("Файл, содержащий коллекцию, отсутствует");
+        } catch(JAXBException e) {
+            System.out.println("Файл, содержащий коллекцию,  недоступен для программы.\n" +
                     "Будет создана новая коллекция, сохранение которой будет невозможно");
             fairy = new MagicMaker();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         for (StudyGroup i : fairy.list) {
             StudyGroup.getIdList().add(i.getId());
@@ -59,6 +62,9 @@ public class CommandLineApp { // Ломается, если ввести нап�
             case "add":
                 fairy.add(scan);
                 break;
+            case "addDef":
+                fairy.add();
+                break;
             case "update" :
                 fairy.update(atomicCommand[1], scan);
                 break;
@@ -89,11 +95,7 @@ public class CommandLineApp { // Ломается, если ввести нап�
                     System.out.println("Такого файла не существует");
                 }
             case "save" :
-                try {
-                    save(fairy);
-                } catch (JAXBException e) {
-                    System.out.println("Сохранение невозможно вследствие недостатка прав или отсутствия файла для сохранения");
-                }
+                save(fairy);
                 break;
             default:
                 System.out.println("Такой команды нет, для получения справки введите \"help\"");
@@ -102,9 +104,6 @@ public class CommandLineApp { // Ломается, если ввести нап�
 
     private void execute_script(String filename) throws IOException {
         File file = new File("src/com/company/" + filename);
-        /*FileReader fileReader = new FileReader(file);
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line = bufferedReader.readLine();*/
         Scanner scan = new Scanner(file);
         String line = scan.nextLine();
         while (true) {
@@ -120,10 +119,17 @@ public class CommandLineApp { // Ломается, если ввести нап�
         }
     }
 
-    private void save(MagicMaker fairy) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(MagicMaker.class);
-        Marshaller marshaller = context.createMarshaller();
-        File file = new File("src/com/company/collectionStorage.xml");
-        marshaller.marshal(fairy, file);
+    private void save(MagicMaker fairy) {
+        try (Writer w = new FileWriter("src/com/company/collectionStorage.xml");
+             Writer bw = new BufferedWriter(w)) {
+            JAXBContext context = JAXBContext.newInstance(MagicMaker.class);
+            Marshaller marshaller = context.createMarshaller();
+            File file = new File("src/com/company/collectionStorage.xml");
+            marshaller.marshal(fairy, bw);
+        } catch (JAXBException e) {
+            System.out.println("Сохранение невозможно");
+        } catch (IOException e) {
+            System.out.println();
+        }
     }
 }

@@ -11,6 +11,7 @@ public class StudyGroup {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
     private transient java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    private String creationDateInString;
     private Long studentsCount; //Значение поля должно быть больше 0, Поле может быть null
     private float averageMark; //Значение поля должно быть больше 0
     private FormOfEducation formOfEducation; //Поле может быть null
@@ -33,6 +34,7 @@ public class StudyGroup {
         this.semesterEnum = semesterEnum;
         this.groupAdmin = groupAdmin;
         creationDate = ZonedDateTime.now();
+        creationDateInString = creationDate.toString();
         do {
             id = (long) (Math.random() * 10000 + 1);
         } while (idList.contains(id));
@@ -45,7 +47,7 @@ public class StudyGroup {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", coordinates=" + coordinates +
-                ", creationDate=" + creationDate +
+                ", creationDate=" + creationDateInString +
                 ", studentsCount=" + studentsCount +
                 ", averageMark=" + averageMark +
                 ", formOfEducation=" + formOfEducation +

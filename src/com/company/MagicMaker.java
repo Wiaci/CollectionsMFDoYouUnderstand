@@ -231,6 +231,15 @@ public class MagicMaker {
         System.out.println("Группа добавлена");
     }
 
+    public void add() {
+        list.add(new StudyGroup("P42111", new Coordinates(372, 820),  21L, 4.8f,
+                FormOfEducation.FULL_TIME_EDUCATION, null, new Person("Усков Иван Владимирович",
+                65, "191987", Color.BROWN, Country.SPAIN)));
+
+        list.sort(studentsCountComparator);
+        System.out.println("Дефолтная группа добавлена");
+    }
+
     public void update(String id, Scanner scan) throws IOException {
         if (id.matches("\\d+") && StudyGroup.getIdList().contains(Long.parseLong(id))) {
             remove_by_id(id);
