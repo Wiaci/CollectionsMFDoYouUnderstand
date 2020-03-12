@@ -97,6 +97,9 @@ public class CommandLineApp { // Ломается, если ввести нап�
             case "count_less_than_form_of_education" :
                 fairy.count_less_than_form_of_education(atomicCommand[1]);
                 break;
+            case "print_field_ascending_semester_enum" :
+                fairy.print_field_ascending_semester_enum();
+                break;
             case "execute_script" :
                 try {
                     execute_script(atomicCommand[1]);

@@ -69,6 +69,10 @@ public class StudyGroup {
         return formOfEducation;
     }
 
+    public Semester getSemesterEnum() {
+        return semesterEnum;
+    }
+
     public Long getStudentsCount() {
         return studentsCount;
     }
