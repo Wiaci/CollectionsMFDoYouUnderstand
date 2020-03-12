@@ -151,6 +151,7 @@ public class CommandLineApp { // Ломается, если ввести нап�
         } catch (IOException e) {
 
             //TODO: точно?
+            //
             System.out.println();
         }
     }
