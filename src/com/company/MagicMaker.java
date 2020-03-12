@@ -308,9 +308,16 @@ public class MagicMaker {
         Person.clearPassportIdList();
     }
     public void print_field_ascending_semester_enum() {
-
-        Semester[] semester = Semester.values();
-        System.out.println(Arrays.toString(semester));
+        List<Semester> semesters = new ArrayList<Semester>(list.size());
+        for (StudyGroup studyGroup : list) {
+            if (studyGroup.getSemesterEnum() != null) {
+                semesters.add(studyGroup.getSemesterEnum());
+            }
+        }
+        Collections.sort(semesters);
+        for (int i = 0; i < semesters.size(); i++) {
+            System.out.println(semesters.get(i));
+        }
     }
     public void count_less_than_form_of_education(String foe) {
         int amount = 0;
