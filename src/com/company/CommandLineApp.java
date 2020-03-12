@@ -149,6 +149,8 @@ public class CommandLineApp { // Ломается, если ввести нап�
         } catch (JAXBException e) {
             System.out.println("Сохранение невозможно");
         } catch (IOException e) {
+
+            //TODO: точно?
             System.out.println();
         }
     }

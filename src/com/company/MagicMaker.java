@@ -234,6 +234,7 @@ public class MagicMaker {
 
     public void add(Scanner scan) throws ALotOfFailsException {
         list.add(getStudyGroup(scan));
+        //TODO: не нужно
         list.sort(studentsCountComparator);
         System.out.println("Группа добавлена");
     }

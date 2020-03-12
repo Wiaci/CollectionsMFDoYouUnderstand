@@ -1,6 +1,6 @@
 package com.company;
 
-public enum Semester {
+public enum Semester  {
     FOURTH,
     FIFTH,
     SIXTH,
