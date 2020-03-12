@@ -40,12 +40,12 @@ public class CommandLineApp { // Ломается, если ввести нап�
             String[] atomicCommand = newCommand.trim().split(" ");
             try {
                 launchCommand(atomicCommand, scan);
-            } catch (IOException e) {
-                System.out.println("Такого файла нет");
+            } catch (ALotOfFailsException e) {
+                System.out.println("Слишком часто ошибаетесь! Соберитесь с духом и начните заново");
             }
         }
     }
-    private void launchCommand(String[] atomicCommand, Scanner scan) throws IOException {
+    private void launchCommand(String[] atomicCommand, Scanner scan) throws ALotOfFailsException {
         switch (atomicCommand[0]) {
             case "" :
             case "exit":
@@ -95,7 +95,11 @@ public class CommandLineApp { // Ломается, если ввести нап�
                 fairy.remove_greater(scan);
                 break;
             case "count_less_than_form_of_education" :
-                fairy.count_less_than_form_of_education(atomicCommand[1]);
+                if (atomicCommand.length > 1) {
+                    fairy.count_less_than_form_of_education(atomicCommand[1]);
+                } else {
+                    System.out.println("Неверный формат ввода команды. Для справки введите \"help\"");
+                }
                 break;
             case "print_field_ascending_semester_enum" :
                 fairy.print_field_ascending_semester_enum();
@@ -122,7 +126,11 @@ public class CommandLineApp { // Ломается, если ввести нап�
         while (true) {
             System.out.println(line);
             String[] atomicCommand = line.trim().split(" ");
-            launchCommand(atomicCommand, scan);
+            try {
+                launchCommand(atomicCommand, scan);
+            } catch (ALotOfFailsException e) {
+                System.out.println("Что-то ваш скрипт приболел...");
+            }
             if (scan.hasNext()) {
                 line = scan.nextLine();
             }
