@@ -94,14 +94,16 @@ public class CommandLineApp { // Ломается, если ввести нап�
             case "remove_greater" :
                 fairy.remove_greater(scan);
                 break;
-            case "qqq" :
+            case "count_less_than_form_of_education" :
                 fairy.count_less_than_form_of_education(atomicCommand[1]);
+                break;
             case "execute_script" :
                 try {
                     execute_script(atomicCommand[1]);
                 } catch (IOException e) {
                     System.out.println("Такого файла не существует");
                 }
+                break;
             case "save" :
                 save(fairy);
                 break;
@@ -116,7 +118,7 @@ public class CommandLineApp { // Ломается, если ввести нап�
         String line = scan.nextLine();
         while (true) {
             System.out.println(line);
-            String[] atomicCommand = line.trim().replace("{", "").replace("}", "").split(" ");
+            String[] atomicCommand = line.trim().split(" ");
             launchCommand(atomicCommand, scan);
             if (scan.hasNext()) {
                 line = scan.nextLine();

@@ -65,6 +65,10 @@ public class StudyGroup {
         idList.clear();
     }
 
+    public FormOfEducation getFormOfEducation() {
+        return formOfEducation;
+    }
+
     public Long getStudentsCount() {
         return studentsCount;
     }

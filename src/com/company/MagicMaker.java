@@ -1,5 +1,6 @@
 package com.company;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import javax.xml.bind.annotation.*;
@@ -24,7 +25,7 @@ public class MagicMaker {
         return list;
     }
 
-    private StudyGroup getStudyGroup(Scanner scan) throws IOException { // true - работа со скриптом, false - с потоком ввода
+    private StudyGroup getStudyGroup(Scanner scan) throws IOException {
         String name;
         int x;
         int y;
@@ -311,6 +312,21 @@ public class MagicMaker {
         Semester[] semester = Semester.values();
         System.out.println(Arrays.toString(semester));
     }
+    public void count_less_than_form_of_education(String foe) {
+        int amount = 0;
+        if ((foe.equals("FULL_TIME_EDUCATION") || foe.equals("EVENING_CLASSES") || foe.equals("DISTANCE_EDUCATION"))) {
+            FormOfEducation formOfEducation = FormOfEducation.valueOf(foe);
+            for (StudyGroup i : list) {
+                if (i.getFormOfEducation() != null && i.getFormOfEducation().compareTo(formOfEducation) > 0) {
+                    amount++;
+                }
+            }
+            System.out.println(amount);
+        } else {
+            System.out.println("Такой формы обучения нет");
+        }
+    }
+
     public void remove_by_id(String id){
         long convertedId = Long.parseLong(id);
         for(int i = 0; i <= list.size(); i++){
@@ -328,11 +344,6 @@ public class MagicMaker {
             }
         }
     }
-
-    public void count_less_than_form_of_education(String foe) {
-        FormOfEducation a = FormOfEducation.valueOf(foe);
-    }
-
     public void help() {
         System.out.println(
                 "    help : вывести справку по доступным командам\n" +
