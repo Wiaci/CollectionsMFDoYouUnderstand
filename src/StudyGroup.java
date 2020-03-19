@@ -1,4 +1,5 @@
-package com.company;
+import enums.FormOfEducation;
+import enums.Semester;
 
 import javax.xml.bind.annotation.*;
 import java.time.ZonedDateTime;
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 @XmlType(name = "studyGroup")
 //TODO: сортировка по умолчанию
 //TODO: equals/hashCode
-public class StudyGroup {
+public class StudyGroup implements Comparable<StudyGroup> {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -90,5 +91,10 @@ public class StudyGroup {
 
     public float getAverageMark() {
         return averageMark;
+    }
+
+    @Override
+    public int compareTo(StudyGroup studyGroup) {
+        return studentsCount.compareTo(studyGroup.getStudentsCount());
     }
 }

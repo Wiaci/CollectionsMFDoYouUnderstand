@@ -1,4 +1,4 @@
-package com.company;
+package enums;
 
 public enum Semester  {
     FOURTH,

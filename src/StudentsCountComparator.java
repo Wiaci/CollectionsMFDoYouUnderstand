@@ -1,5 +1,3 @@
-package com.company;
-
 import java.util.Comparator;
 
 public class StudentsCountComparator implements Comparator<StudyGroup> {

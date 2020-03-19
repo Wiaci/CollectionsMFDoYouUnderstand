@@ -1,9 +1,5 @@
-package com.company;
-
-//TODO: ctrl + d
 //TODO: Имя файла должно передаваться программе с помощью: аргумент командной строки.
-//TODO: Введите координату x: 111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
-//TODO: save не работает при недостатке прав
+//TODO: save не работает
 //TODO: NPE при запуске программы, когда файла нет/нет прав
 //TODO: путь к скрипту
 //TODO: Введите имя группы: Exception in thread "main" java.util.NoSuchElementException: No line found
@@ -11,7 +7,17 @@ package com.company;
 public class Main {
 
     public static void main(String[] args) {
-        CommandLineApp dungeonMaster = new CommandLineApp();
-        dungeonMaster.go();
+        CommandLineApp dungeonMaster;
+        if (args.length != 0) {
+            dungeonMaster = new CommandLineApp(args[0]);
+        } else {
+            dungeonMaster = new CommandLineApp("src/collectionStorage.xml");
+        }
+
+        try {
+            dungeonMaster.go();
+        } catch (CtrlDException e) {
+            System.out.println("Сердечко: моя остановочка");
+        }
     }
 }
