@@ -1,24 +1,63 @@
 import enums.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 public class UserMagicInteract {
 
-    private static Scanner scan;
+    /*private static Scanner scan;*/
+    private static BufferedReader read;
     private final CollectionMagicInteract collection;
 
-    public UserMagicInteract(CollectionMagicInteract collection, Scanner scan) {
+    public UserMagicInteract(CollectionMagicInteract collection, BufferedReader read) {
         this.collection = collection;
-        UserMagicInteract.scan = scan;
+        /*UserMagicInteract.scan = scan;*/
+        UserMagicInteract.read = read;
     }
 
     public String[] getNewCommand() throws CtrlDException {
-        String line;
-        if (scan.hasNext()) {
-            line = scan.nextLine();
+        String line = "";
+        try {
+            line = read.readLine();
+        } catch (IOException e) {
+            System.out.println("Aga!");
+        }
+        if (line != null) {
+            return line.trim().split(" ");
         } else {
             throw new CtrlDException();
         }
-        return line.trim().split(" ");
+    }
+
+    private static String getNewLine() throws CtrlDException {
+        String line = null;
+        try {
+            line = read.readLine();
+        } catch (IOException e) {
+            System.out.println("Aga!");
+        }
+        if (line != null) {
+            return line;
+        } else {
+            throw new CtrlDException();
+        }
+    }
+
+    public void printHello() {
+        String[] quotes = new String[] {"у втшника нет цели, только путь, наполненный страданиями",
+                                        "этот мир прогнил, и не осталось ничего, кроме страданий",
+                                        "волк слабее льва и тигра, но в цирке волк не выступает",
+                                        "чем старше человек, тем больше ему лет",
+                                        "кто обзывается, тот так сам и называется",
+                                        "курение убивает", "это ловушка Джокера",
+                                        "что лучше уточнить этот вопрос у Студенческого офиса Университета ИТМО",
+                                        "прошу отчислить меня из университета по собственному желанию!",
+                                        "на ответах майл ру фигни не скажут",
+                                        "это не цитата, а стиль жизни", "из-за ИТМО у меня беды с башкой"};
+        int i = (int) (Math.random() * quotes.length);
+        System.out.println("Здравствуйте! Знаете ли вы, что " + quotes[i] + "?");
     }
 
     public void head() {
@@ -123,24 +162,22 @@ public class UserMagicInteract {
     }
 
     public static StudyGroup getStudyGroup() throws ALotOfFailsException, CtrlDException {
-        String name = null;
+        String name = "";
         int x = 0;
         int y = 0;
-        Long studentsCount = 0L;
-        float averageMark = 0f;
+        long studentsCount = 0L;
+        float averageMark = 0;
         FormOfEducation formOfEducation = null;
         Semester semester = null;
         String adminName = "";
-        float weight = 0f;
+        float weight = 0;
         String passportId = "";
         Color eyeColor = null;
         Country nationality = null;
         int tries = 0;
         do {
             System.out.print("Введите имя группы: ");
-            if (scan.hasNext()) {
-                name = scan.nextLine();
-            } else { break; }
+            name = getNewLine();
             if (name.equals("")) {
                 System.out.println("Строка не может быть пустой");
             }
@@ -148,10 +185,7 @@ public class UserMagicInteract {
 
         do {
             System.out.print("Введите координату x: ");
-            String line;
-            if (scan.hasNext()) {
-                line = scan.nextLine();
-            } else { throw new CtrlDException(); }
+            String line = getNewLine();
             if (line.matches("-?\\d{1,10}")) {
                 x = Integer.parseInt(line);
                 break;
@@ -165,10 +199,7 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите координату y: ");
-            String line;
-            if (scan.hasNext()) {
-                line = scan.nextLine();
-            } else { throw new CtrlDException(); }
+            String line = getNewLine();
             if (line.matches("-?\\d{1,10}") && Integer.parseInt(line) > -791) {
                 y = Integer.parseInt(line);
                 break;
@@ -182,11 +213,8 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите количество студентов в группе: ");
-            String line;
-            if (scan.hasNext()) {
-                line = scan.nextLine();
-            } else { throw new CtrlDException(); }
-            if (line.matches("\\d{0,10}")) {
+            String line = getNewLine();
+            if (line.matches("\\d{1,10}")) {
                 studentsCount = Long.parseLong(line);
                 break;
             }
@@ -198,7 +226,7 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите средний балл студентов: ");
-            String line = scan.nextLine();
+            String line = getNewLine();
             if (line.matches("\\d{0,10}\\.?\\d{1,10}")) {
                 averageMark = Float.parseFloat(line);
                 break;
@@ -212,7 +240,7 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите форму обучения: ");
-            String line = scan.nextLine();
+            String line = getNewLine();
             boolean isFit = true;
             switch (line) {
                 case "" : break;
@@ -232,7 +260,7 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите номер семестра: ");
-            String line = scan.nextLine();
+            String line = getNewLine();
             boolean isFit = true;
             switch (line) {
                 case "" : break;
@@ -253,7 +281,7 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите имя админа группы: ");
-            adminName = scan.nextLine();
+            adminName = getNewLine();
             if (++tries > 3) {
                 throw new ALotOfFailsException();
             }
@@ -265,7 +293,7 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите вес админа: ");
-            String line = scan.nextLine();
+            String line = getNewLine();
             if (line.matches("\\d{0,10}\\.?\\d{1,10}")) {
                 weight = Float.parseFloat(line);
                 break;
@@ -279,10 +307,13 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите passportID админа: ");
-            String line = scan.nextLine();
+            String line = getNewLine();
             if (line.matches(".{5,20}") || line.equals("")) {
                 if (!Person.getPassportIDList().contains(line)) {
                     passportId = line;
+                    break;
+                } else if (line.equals("")) {
+                    passportId = null;
                     break;
                 }
                 else {
@@ -299,7 +330,7 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите цвет глаз админа: ");
-            String line = scan.nextLine();
+            String line = getNewLine();
             boolean isFit = true;
             switch (line) {
                 case "" : break;
@@ -320,7 +351,7 @@ public class UserMagicInteract {
         tries = 0;
         do {
             System.out.print("Введите национальность админа: ");
-            String line = scan.nextLine();
+            String line = getNewLine();
             boolean isFit = true;
             switch (line) {
                 case "INDIA" : nationality = Country.INDIA; break;
@@ -341,5 +372,4 @@ public class UserMagicInteract {
     }
 }
 
-class ALotOfFailsException extends Exception {
-}
+class ALotOfFailsException extends Exception {}

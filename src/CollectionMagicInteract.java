@@ -21,7 +21,7 @@ public class CollectionMagicInteract {
 
     public void update() {
         for (StudyGroup i : list) {
-            StudyGroup.getIdList().add(i.getId());
+            StudyGroup.getIdSet().add(i.getId());
             Person.getPassportIDList().add(i.getGroupAdmin().getPassportID());
         }
     }
@@ -47,7 +47,7 @@ public class CollectionMagicInteract {
     }
 
     public boolean removeElementByID(String id){
-        if (id.matches("\\d+") && StudyGroup.getIdList().contains(Long.parseLong(id))) {
+        if (id.matches("\\d+") && StudyGroup.getIdSet().contains(Long.parseLong(id))) {
             long convertedId = Long.parseLong(id);
             for (int i = 0; i <= list.size(); i++) {
                 if (list.get(i).getId() == convertedId) {
@@ -119,7 +119,7 @@ public class CollectionMagicInteract {
     }
 
     public boolean updateElementByID(String id) throws ALotOfFailsException, CtrlDException {
-        if (id.matches("\\d+") && StudyGroup.getIdList().contains(Long.parseLong(id))) {
+        if (id.matches("\\d+") && StudyGroup.getIdSet().contains(Long.parseLong(id))) {
             removeElementByID(id);
             list.add(UserMagicInteract.getStudyGroup());
             list.getLast().setId(Long.parseLong(id));

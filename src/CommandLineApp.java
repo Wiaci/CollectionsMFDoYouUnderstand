@@ -1,21 +1,26 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class CommandLineApp {
     private CollectionMagicInteract collection;
     private UserMagicInteract user;
     private final FileMagicInteract file = new FileMagicInteract();
+    private String collectionFilename;
 
     private String[] newCommand = new String[] {""};
 
     public CommandLineApp(String collectionFilename) {
+        this.collectionFilename = collectionFilename;
         collection = file.load(collectionFilename);
         collection.update();
-        user = new UserMagicInteract(collection, new Scanner(System.in));
+        user = new UserMagicInteract(collection, new BufferedReader(new InputStreamReader(System.in)));
     }
 
     public void go() throws CtrlDException {
-        System.out.println("Witamy! Tutaj możecie coś zrobić"); // TODO: придумать что-то нормальное
-        /*Scanner scan = new Scanner(System.in);*/
+        user.printHello();
         while (!newCommand[0].equals("exit")) {
             newCommand = user.getNewCommand();
             try {
@@ -78,15 +83,19 @@ public class CommandLineApp {
             case "print_field_ascending_semester_enum" :
                 user.print_field_ascending_semester_enum();
                 break;
-            /*case "execute_script" :
-                try {
-                    execute_script(atomicCommand[1]);
-                } catch (IOException e) {
-                    System.out.println("Такого файла не существует");
+            case "execute_script" :
+                if (atomicCommand.length > 1) {
+                    try {
+                        execute_script(atomicCommand[1]);
+                    } catch (IOException e) {
+                        System.out.println("Такого файла не существует");
+                    }
+                } else {
+                    System.out.println("Неверный формат ввода команды. Для справки введите \"help\"");
                 }
-                break;*/
+                break;
             case "save" :
-                file.save(collection);
+                file.save(collection, collectionFilename);
                 break;
             case "clear":
                 user.clear();
@@ -96,22 +105,34 @@ public class CommandLineApp {
         }
     }
 
-    /*private void execute_script(String filename) throws IOException {
-        Reader r = new FileReader("src/com/company/" + filename);
-        Scanner scan = new Scanner(r);
-        String line = scan.nextLine();
-        while (true) {
-            System.out.println(line);
-            String[] atomicCommand = line.trim().split(" ");
+    private final HashSet<String> antiRecursion = new HashSet<>();
+
+    private void execute_script(String filename) throws IOException {
+        antiRecursion.add(filename);
+        System.out.println(antiRecursion);
+        user = new UserMagicInteract(collection, new BufferedReader(new FileReader(filename)));
+        String[] line;
+        boolean thereWasRecursion = false;
+        do {
             try {
-                launchCommand(atomicCommand);
+                line = user.getNewCommand();
+                if (line.length < 2 || (!line[0].equals("execute_script") || !antiRecursion.contains(line[1]))) {
+                    launchCommand(line);
+                } else {
+                    thereWasRecursion = true;
+                }
             } catch (ALotOfFailsException e) {
                 System.out.println("Что-то ваш скрипт приболел...");
+            } catch (CtrlDException e) {
+                break;
             }
-            line = scan.nextLine();
+        } while (true);
+        if (thereWasRecursion) {
+            System.out.println("В скрипте была рекурсия!");
         }
-    }*/
+        antiRecursion.remove(filename);
+        user = new UserMagicInteract(collection, new BufferedReader(new InputStreamReader(System.in)));
+    }
 }
 
-class CtrlDException extends Exception {
-}
+class CtrlDException extends Exception {}
