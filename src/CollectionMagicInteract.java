@@ -22,7 +22,7 @@ public class CollectionMagicInteract {
     public void update() {
         for (StudyGroup i : list) {
             StudyGroup.getIdSet().add(i.getId());
-            Person.getPassportIDList().add(i.getGroupAdmin().getPassportID());
+            Person.getPassportIDSet().add(i.getGroupAdmin().getPassportID());
         }
     }
 

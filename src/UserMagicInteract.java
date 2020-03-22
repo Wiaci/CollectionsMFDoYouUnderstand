@@ -2,18 +2,14 @@ import enums.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.Scanner;
 
 public class UserMagicInteract {
 
-    /*private static Scanner scan;*/
     private static BufferedReader read;
     private final CollectionMagicInteract collection;
 
     public UserMagicInteract(CollectionMagicInteract collection, BufferedReader read) {
         this.collection = collection;
-        /*UserMagicInteract.scan = scan;*/
         UserMagicInteract.read = read;
     }
 
@@ -47,6 +43,8 @@ public class UserMagicInteract {
 
     public void printHello() {
         String[] quotes = new String[] {"у втшника нет цели, только путь, наполненный страданиями",
+                                        "раньше было лучше...",
+                                        "я вот посидел поныл и ничего не изменилось ну клево ну круто ну я рад",
                                         "этот мир прогнил, и не осталось ничего, кроме страданий",
                                         "волк слабее льва и тигра, но в цирке волк не выступает",
                                         "чем старше человек, тем больше ему лет",
@@ -162,16 +160,16 @@ public class UserMagicInteract {
     }
 
     public static StudyGroup getStudyGroup() throws ALotOfFailsException, CtrlDException {
-        String name = "";
-        int x = 0;
-        int y = 0;
-        long studentsCount = 0L;
-        float averageMark = 0;
+        String name;
+        int x;
+        int y;
+        long studentsCount ;
+        float averageMark;
         FormOfEducation formOfEducation = null;
         Semester semester = null;
-        String adminName = "";
-        float weight = 0;
-        String passportId = "";
+        String adminName;
+        float weight;
+        String passportId;
         Color eyeColor = null;
         Country nationality = null;
         int tries = 0;
@@ -309,7 +307,7 @@ public class UserMagicInteract {
             System.out.print("Введите passportID админа: ");
             String line = getNewLine();
             if (line.matches(".{5,20}") || line.equals("")) {
-                if (!Person.getPassportIDList().contains(line)) {
+                if (!Person.getPassportIDSet().contains(line)) {
                     passportId = line;
                     break;
                 } else if (line.equals("")) {

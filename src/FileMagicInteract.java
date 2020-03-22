@@ -14,12 +14,11 @@ public class FileMagicInteract {
             collection = (CollectionMagicInteract) unmarshaller.unmarshal(bf);
 
         } catch (FileNotFoundException e) {
-            System.out.println("Файл, содержащий коллекцию, отсутствует.\n" +
+            System.out.println("Файл, содержащий коллекцию, отсутствует (возможно, у вас недостаточно прав).\n" +
                     "Будет создана новая коллекция");
             collection = new CollectionMagicInteract();
         } catch (JAXBException e) {
-            System.out.println("Файл, содержащий коллекцию, недоступен для программы или поврежден/пуст.\n" +
-                    "Будет создана новая коллекция");
+            System.out.println("Файл, содержащий коллекцию, пуст. Будет создана новая коллекция");
             collection = new CollectionMagicInteract();
         } catch (IOException e) {
             System.out.println("Юзер, вы чудовище!");
@@ -46,7 +45,7 @@ public class FileMagicInteract {
         } catch (JAXBException e) {
             System.out.println("Сохранение невозможно");
         } catch (IOException e) {
-            System.out.println("Поверьте, что-то не так");
+            System.out.println("Нет прав на сохранение коллекции в файл");
         }
     }
 }

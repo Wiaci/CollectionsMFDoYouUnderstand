@@ -109,7 +109,6 @@ public class CommandLineApp {
 
     private void execute_script(String filename) throws IOException {
         antiRecursion.add(filename);
-        System.out.println(antiRecursion);
         user = new UserMagicInteract(collection, new BufferedReader(new FileReader(filename)));
         String[] line;
         boolean thereWasRecursion = false;
