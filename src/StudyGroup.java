@@ -1,31 +1,29 @@
-package com.company;
-
+import enums.*;
 import javax.xml.bind.annotation.*;
+import javax.xml.bind.annotation.adapters.*;
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "studyGroup")
-//TODO: сортировка по умолчанию
-//TODO: equals/hashCode
-public class StudyGroup {
+public class StudyGroup implements Comparable<StudyGroup> {
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
-    //TODO: xml adapter, not transient
-    private transient java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private String creationDateInString;
+    @XmlJavaTypeAdapter(ZonedDateTimeAdapter.class)
+    private java.time.ZonedDateTime creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
     private Long studentsCount; //Значение поля должно быть больше 0, Поле может быть null
     private float averageMark; //Значение поля должно быть больше 0
     private FormOfEducation formOfEducation; //Поле может быть null
     private Semester semesterEnum; //Поле может быть null
     private Person groupAdmin; //Поле не может быть null
-    private static ArrayList<Long> idList = new ArrayList<>();
+    private static final HashSet<Long> idSet = new HashSet<>();
 
-    public StudyGroup() {};
+    public StudyGroup() {}
 
-    public static ArrayList<Long> getIdList() {
-        return idList;
+    public static HashSet<Long> getIdSet() {
+        return idSet;
     }
 
     public StudyGroup(String name, Coordinates coordinates, Long studentsCount, float averageMark,
@@ -38,12 +36,10 @@ public class StudyGroup {
         this.semesterEnum = semesterEnum;
         this.groupAdmin = groupAdmin;
         creationDate = ZonedDateTime.now();
-        creationDateInString = creationDate.toString();
         do {
             id = (long) (Math.random() * 10000 + 1);
-            //TODO: id LIST?!
-        } while (idList.contains(id));
-        idList.add(id);
+        } while (idSet.contains(id));
+        idSet.add(id);
     }
 
     @Override
@@ -52,7 +48,7 @@ public class StudyGroup {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", coordinates=" + coordinates +
-                ", creationDate=" + creationDateInString +
+                ", creationDate=" + creationDate +
                 ", studentsCount=" + studentsCount +
                 ", averageMark=" + averageMark +
                 ", formOfEducation=" + formOfEducation +
@@ -66,13 +62,12 @@ public class StudyGroup {
     }
 
     public static void clearIdList() {
-        idList.clear();
+        idSet.clear();
     }
 
     public FormOfEducation getFormOfEducation() {
         return formOfEducation;
     }
-    public Semester getSemester() {return semesterEnum;}
 
     public Semester getSemesterEnum() {
         return semesterEnum;
@@ -90,5 +85,37 @@ public class StudyGroup {
 
     public float getAverageMark() {
         return averageMark;
+    }
+
+    @Override
+    public int compareTo(StudyGroup studyGroup) {
+        return studentsCount.compareTo(studyGroup.getStudentsCount());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StudyGroup that = (StudyGroup) o;
+        return  Objects.equals(studentsCount, that.studentsCount) &&
+                Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, studentsCount);
+    }
+}
+
+class ZonedDateTimeAdapter extends XmlAdapter<String, ZonedDateTime> {
+
+    @Override
+    public ZonedDateTime unmarshal(String s) throws Exception {
+        return ZonedDateTime.parse(s);
+    }
+
+    @Override
+    public String marshal(ZonedDateTime zonedDateTime) throws Exception {
+        return zonedDateTime.toString();
     }
 }

@@ -16,4 +16,4 @@ RANCE
 show
 
 save
-exit
+execute_script scriptoo

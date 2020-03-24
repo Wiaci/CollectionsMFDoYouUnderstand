@@ -1,9 +1,10 @@
-package com.company;
-
+import enums.Color;
+import enums.Country;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 @XmlType(name = "person")
 @XmlAccessorType(XmlAccessType.FIELD)
@@ -13,10 +14,10 @@ public class Person {
     private String passportID; //Длина строки должна быть не меньше 5, Значение этого поля должно быть уникальным, Длина строки не должна быть больше 20, Поле может быть null
     private Color eyeColor; //Поле может быть null
     private Country nationality; //Поле не может быть null
-    private static ArrayList<String> passportIDList = new ArrayList<>();
+    private static HashSet<String> passportIDSet = new HashSet<>();
 
-    public static ArrayList<String> getPassportIDList() {
-        return passportIDList;
+    public static HashSet<String> getPassportIDSet() {
+        return passportIDSet;
     }
 
     private Person() {};
@@ -25,13 +26,13 @@ public class Person {
         this.name = name;
         this.weight = weight;
         this.passportID = passportID;
-        passportIDList.add(passportID);
+        passportIDSet.add(passportID);
         this.eyeColor = eyeColor;
         this.nationality = nationality;
     }
 
     public static void clearPassportIdList() {
-        passportIDList.clear();
+        passportIDSet.clear();
     }
 
     public String getPassportID() {
