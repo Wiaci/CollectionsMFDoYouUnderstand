@@ -76,11 +76,9 @@ public class CollectionMagicInteract {
     public int removeGreater() throws ALotOfFailsException, CtrlDException {
         StudyGroup studyGroup = UserMagicInteract.getStudyGroup();
         int counter = 0;
-        for (int i = list.size() - 1; i >= 0; i--) {
-            if (list.get(i).getStudentsCount() > studyGroup.getStudentsCount()) {
-                list.remove(i);
-                counter++;
-            }
+        while (Collections.max(list).compareTo(studyGroup) > 0) {
+            list.remove(Collections.max(list));
+            counter++;
         }
         return counter;
     }
