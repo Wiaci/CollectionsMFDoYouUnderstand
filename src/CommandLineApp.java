@@ -1,5 +1,4 @@
 import java.io.*;
-import java.nio.Buffer;
 import java.util.*;
 
 public class CommandLineApp {
@@ -83,10 +82,15 @@ public class CommandLineApp {
                 break;
             case "execute_script" :
                 if (atomicCommand.length > 1) {
-                    try {
-                        execute_script(atomicCommand[1]);
-                    } catch (FileNotFoundException e) {
-                        System.out.println("Такого файла не существует");
+                    execute_script(atomicCommand[1]);
+                    if (listOfScripts.size() == 0 && problemFiles.size() > 0) {
+                        System.out.println("\n!!!\nУ вас рот в гов... Ой, то есть рекурсия в скрипте\n" +
+                                "В следующих файлах был обнаружен рекурсивный вызов:");
+                        for (String i: problemFiles.keySet()) {
+                            System.out.println("\t" + i + " - вызов скрипта " + problemFiles.get(i));
+                        }
+                        System.out.println("!!!");
+                        problemFiles.clear();
                     }
                 } else {
                     System.out.println("Неверный формат ввода команды. Для справки введите \"help\"");
@@ -103,119 +107,37 @@ public class CommandLineApp {
         }
     }
 
-    LinkedList<String> listOfFiles = new LinkedList<>();
+    LinkedList<String> listOfScripts = new LinkedList<>();
+    HashMap<String, String> problemFiles = new HashMap<>();
 
-    private String toOneScript(String filename) throws FileNotFoundException {
-        listOfFiles.add(filename);
-        BufferedReader reader = new BufferedReader(new FileReader(filename));
-        StringBuilder scriptB = new StringBuilder();
+    private void execute_script(String filename) throws ALotOfFailsException, CtrlDException {
         try {
-            String n = reader.readLine();
-            while (n != null) {
-                scriptB.append(n).append("\n");
-                n = reader.readLine();
-            }
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+            listOfScripts.add(filename);
+            String newLine;
+            user = new UserMagicInteract(collection, reader);
+            do {
+                newLine = reader.readLine();
+                if (newLine == null) break;
+                newLine = newLine.trim();
+                if (newLine.startsWith("execute_script") && !listOfScripts.contains(newLine.replaceFirst("execute_script", "").trim())) {
+                    if (newLine.replaceFirst("execute_script", "").trim().isEmpty()) {
+                        listOfScripts.add(newLine.replaceFirst("execute_script", "").trim());
+                    }
+                    launchCommand(newLine.split(" "));
+                } else if (!newLine.startsWith("execute_script")) {
+                    launchCommand(newLine.split(" "));
+                } else problemFiles.put(filename, newLine.replaceFirst("execute_script", "").trim());
+            } while (true);
+        } catch (FileNotFoundException e) {
+            System.out.println("Такого файла нет");
         } catch (IOException e) {
-            System.out.println(scriptB);
-        }
-        String script = scriptB.toString();
-        String innerScriptFilename = "";
-        String[] check = script.replace("\n", " ").replace("  ", " ").split(" ");
-        for (String i: check) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
-        boolean isChanged;
-        do {
-            isChanged = false;
-            for (int i = 0; i < check.length; i++) {
-                if (check[i].equals("execute_script") && !listOfFiles.contains(check[i + 1])) {
-                    innerScriptFilename = check[i + 1].replace(" ", "!");
-                    System.out.println(innerScriptFilename);
-                    isChanged = true;
-                    break;
-                }
-            }
-            String scriptFromFile = toOneScript(innerScriptFilename);
-            script = script.replace("execute_script " + innerScriptFilename + "\n", scriptFromFile);
-            System.out.println(script);
-        } while (isChanged);
-        listOfFiles.removeLast();
-        return script;
-    }
-
-    private void execute_script(String filename) throws FileNotFoundException {
-        String script = toOneScript(filename);
-        System.out.println(script);
-    }
-
-    /*private final LinkedList<String> antiRecursion = new LinkedList<>();
-    private final LinkedList<BufferedReader> readers = new LinkedList<>();
-
-    private void execute_script(String filename) throws IOException {
-        antiRecursion.add(filename);
-        BufferedReader b = new BufferedReader(new FileReader(filename));
-        user = new UserMagicInteract(collection, b);
-        readers.add(b);
-        String[] line;
-        boolean thereWasRecursion = false;
-        do {
-            try {
-                line = user.getNewCommand();
-                if (line.length < 2 || (!line[0].equals("execute_script") || !antiRecursion.contains(line[1]))) {
-                    launchCommand(line);
-                } else {
-                    thereWasRecursion = true;
-                }
-            } catch (ALotOfFailsException e) {
-                System.out.println("Что-то ваш скрипт приболел...");
-            } catch (CtrlDException e) {
-                break;
-            }
-        } while (true);
-        if (thereWasRecursion) {
-            System.out.println("В скрипте была рекурсия!");
-        }
-        antiRecursion.remove(filename);
-        readers.removeLast();
-        if (antiRecursion.size() > 0) {
-            execute_script(antiRecursion.getLast());
-        } else {
+            System.out.println("У вас скрипт белый!");
+        } finally {
+            listOfScripts.removeLast();
             user = new UserMagicInteract(collection, new BufferedReader(new InputStreamReader(System.in)));
         }
-    }*/
-
-    /*private void execute_script(BufferedReader b) throws IOException {
-        user = new UserMagicInteract(collection, b);
-        readers.add(b);
-        users.add(user);
-        String[] line;
-        boolean thereWasRecursion = false;
-        do {
-            try {
-                line = user.getNewCommand();
-                if (line.length < 2 || (!line[0].equals("execute_script") || !antiRecursion.contains(line[1]))) {
-                    launchCommand(line);
-                } else {
-                    thereWasRecursion = true;
-                }
-            } catch (ALotOfFailsException e) {
-                System.out.println("Что-то ваш скрипт приболел...");
-            } catch (CtrlDException e) {
-                break;
-            }
-        } while (true);
-        if (thereWasRecursion) {
-            System.out.println("В скрипте была рекурсия!");
-        }
-        users.removeLast();
-        readers.removeLast();
-        if (antiRecursion.size() > 0) {
-            execute_script(antiRecursion.getLast());
-        } else {
-            user = new UserMagicInteract(collection, new BufferedReader(new InputStreamReader(System.in)));
-        }
-    }*/
+    }
 }
 
 class CtrlDException extends Exception {}
