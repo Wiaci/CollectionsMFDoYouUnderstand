@@ -108,7 +108,7 @@ public class CommandLineApp {
     }
 
     LinkedList<String> listOfScripts = new LinkedList<>();
-    HashMap<String, String> problemFiles = new HashMap<>();
+    HashMap<String, String> problemFiles = new HashMap<>(); // мап с проблемными файлами и их вызовами
 
     private void execute_script(String filename) throws ALotOfFailsException, CtrlDException {
         try {
