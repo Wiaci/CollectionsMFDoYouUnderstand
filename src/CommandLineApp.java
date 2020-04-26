@@ -134,7 +134,7 @@ public class CommandLineApp {
         } catch (IOException e) {
             System.out.println("У вас скрипт белый!");
         } finally {
-            listOfScripts.removeLast();
+            if (listOfScripts.size() > 0) listOfScripts.removeLast();
             user = new UserMagicInteract(collection, new BufferedReader(new InputStreamReader(System.in)));
         }
     }
