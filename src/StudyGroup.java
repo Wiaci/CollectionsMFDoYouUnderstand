@@ -7,6 +7,8 @@ import java.util.Objects;
 
 /**
  * Класс - студенческая группа
+ * @author Вячесанн Станисеевич
+ * @version 7.3
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "studyGroup")

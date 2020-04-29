@@ -5,6 +5,8 @@ import java.util.*;
 
 /**
  * Класс для взаимодействия с коллекцией
+ * @author Вячесанн Станисеевич
+ * @version 7.3
  */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)

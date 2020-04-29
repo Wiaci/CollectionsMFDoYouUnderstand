@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 /**
  * Класс для взаимодействия с файлом коллекции
+ * @author Вячесанн Станисеевич
+ * @version 7.3
  */
 public class FileMagicInteract {
 

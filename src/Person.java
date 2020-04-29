@@ -8,6 +8,8 @@ import java.util.HashSet;
 
 /**
  * Класс - админ группы
+ * @author Вячесанн Станисеевич
+ * @version 7.3
  */
 @XmlType(name = "person")
 @XmlAccessorType(XmlAccessType.FIELD)

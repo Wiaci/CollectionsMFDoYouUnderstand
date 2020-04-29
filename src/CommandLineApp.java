@@ -3,6 +3,8 @@ import java.util.*;
 
 /**
  * Класс для организации работы приложения
+ * @author  Вячесанн Станисеевич
+ * @version 7.3
  */
 public class CommandLineApp {
     private final CollectionMagicInteract collection;
@@ -26,6 +28,9 @@ public class CommandLineApp {
             launchCommand(newCommand);
         }
     }
+/**
+ * Метод для
+ */
     private void launchCommand(String[] atomicCommand) throws CtrlDException {
         switch (atomicCommand[0]) {
             case "" :

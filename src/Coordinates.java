@@ -3,7 +3,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 /**
- * Класс - координаты группы
+ * Класс - координаты
+ * @author Вячесанн Станисеевич
+ * @version 7.3
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "coordinates")

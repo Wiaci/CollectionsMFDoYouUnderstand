@@ -5,6 +5,8 @@ import java.io.IOException;
 
 /**
  * Класс для взаимодействия с пользователем
+ * @author Вячесанн Станисеевич
+ * @version 7.3
  */
 public class UserMagicInteract {
 
@@ -31,7 +33,10 @@ public class UserMagicInteract {
             throw new CtrlDException();
         }
     }
-
+/**
+ *  Метод getStudyGroup для ввода группы в строчку
+ *  @param args массив аргументов группы
+ * */
     public static StudyGroup getStudyGroup(String[] args) throws IOException {
         int x;
         int y;
@@ -125,7 +130,9 @@ public class UserMagicInteract {
         return new StudyGroup(args[0], new Coordinates(x, y), studentsCount, averageMark, formOfEducation, semester,
                 new Person(args[7], weight, passportId, eyeColor, nationality));
     }
-
+    /**
+     *  Метод getStudyGroup для ввода построчно
+     * */
     public static StudyGroup getStudyGroup() throws CtrlDException {
         String name;
         int x;
