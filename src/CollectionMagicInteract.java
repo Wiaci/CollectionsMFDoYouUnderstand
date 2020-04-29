@@ -32,6 +32,9 @@ public class CollectionMagicInteract {
         }
     }
 
+    /**
+     * Метод очищает от токсинов и всего на свете коллекцию
+     */
     public void clear() {
         list.clear();
         StudyGroup.clearIdList();
