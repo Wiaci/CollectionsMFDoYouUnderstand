@@ -29,7 +29,8 @@ public class CommandLineApp {
         }
     }
 /**
- * Метод для
+ * Метод для распознавания и выполнения команд
+ * @param atomicCommand массив
  */
     private void launchCommand(String[] atomicCommand) throws CtrlDException {
         switch (atomicCommand[0]) {
@@ -123,7 +124,10 @@ public class CommandLineApp {
 
     LinkedList<String> listOfScripts = new LinkedList<>();
     HashMap<String, String> problemFiles = new HashMap<>(); // мап с проблемными файлами и их вызовами
-
+    /**
+     * Метод для выполнения скрипта
+     * @param filename имя файла содержащего скрипт
+     */
     private void execute_script(String filename) throws CtrlDException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));

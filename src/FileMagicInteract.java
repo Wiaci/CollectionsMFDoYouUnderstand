@@ -8,7 +8,10 @@ import java.util.Scanner;
  * @version 7.3
  */
 public class FileMagicInteract {
-
+    /**
+     * Метод загружает коллекцию из файла
+     * @param filename имя файла
+     */
     public CollectionMagicInteract load(String filename) {
         CollectionMagicInteract collection = new CollectionMagicInteract();
 
@@ -40,7 +43,11 @@ public class FileMagicInteract {
         }
         return collection;
     }
-
+    /**
+     * Метод сохраняет коллекцию
+     * @param collection коллекция, которую нужно сохранить
+     * @param collectionFilename имя файла куда нужно сохранить
+     */
     public void save(CollectionMagicInteract collection, String collectionFilename) {
         try (Writer w = new FileWriter(collectionFilename);
              Writer bw = new BufferedWriter(w)) {
