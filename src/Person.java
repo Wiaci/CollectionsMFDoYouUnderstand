@@ -6,6 +6,9 @@ import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Класс - админ группы
+ */
 @XmlType(name = "person")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Person {

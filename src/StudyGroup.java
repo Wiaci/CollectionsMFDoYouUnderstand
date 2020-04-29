@@ -5,6 +5,9 @@ import java.time.ZonedDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 
+/**
+ * Класс - студенческая группа
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "studyGroup")
 public class StudyGroup implements Comparable<StudyGroup> {

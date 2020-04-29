@@ -1,7 +1,11 @@
 import enums.*;
 import javax.xml.bind.annotation.*;
+import java.io.IOException;
 import java.util.*;
 
+/**
+ * Класс для взаимодействия с коллекцией
+ */
 @XmlRootElement
 @XmlAccessorType(XmlAccessType.NONE)
 @XmlType
@@ -32,12 +36,15 @@ public class CollectionMagicInteract {
         Person.clearPassportIdList();
     }
 
-    public void addElement() throws ALotOfFailsException, CtrlDException {
-        list.add(UserMagicInteract.getStudyGroup());
+    public void addElement(String[] args) throws CtrlDException, IOException {
+        if (args.length == 1) list.add(UserMagicInteract.getStudyGroup());
+        else list.add(UserMagicInteract.getStudyGroup(Arrays.copyOfRange(args, 1, args.length)));
     }
 
-    public boolean addElementIfMax() throws ALotOfFailsException, CtrlDException {
-        StudyGroup studyGroup = UserMagicInteract.getStudyGroup();
+    public boolean addElementIfMax(String[] args) throws CtrlDException, IOException {
+        StudyGroup studyGroup;
+        if (args.length == 1) studyGroup = UserMagicInteract.getStudyGroup();
+        else studyGroup = UserMagicInteract.getStudyGroup(Arrays.copyOfRange(args, 1, args.length));
         if (list.size() != 0 && studyGroup.compareTo(list.getLast()) > 0) {
             list.add(studyGroup);
             return true;
@@ -52,6 +59,8 @@ public class CollectionMagicInteract {
             for (int i = 0; i <= list.size(); i++) {
                 if (list.get(i).getId() == convertedId) {
                     list.remove(i);
+                    StudyGroup.clearIdList();
+                    Person.clearPassportIdList();
                     break;
                 }
             }
@@ -73,8 +82,10 @@ public class CollectionMagicInteract {
         }
     }
 
-    public int removeGreater() throws ALotOfFailsException, CtrlDException {
-        StudyGroup studyGroup = UserMagicInteract.getStudyGroup();
+    public int removeGreater(String[] args) throws CtrlDException, IOException {
+        StudyGroup studyGroup;
+        if (args.length == 1) studyGroup = UserMagicInteract.getStudyGroup();
+        else studyGroup = UserMagicInteract.getStudyGroup(Arrays.copyOfRange(args, 1, args.length));
         int counter = 0;
         while (Collections.max(list).compareTo(studyGroup) > 0) {
             list.remove(Collections.max(list));
@@ -116,11 +127,13 @@ public class CollectionMagicInteract {
         return str;
     }
 
-    public boolean updateElementByID(String id) throws ALotOfFailsException, CtrlDException {
-        if (id.matches("\\d+") && StudyGroup.getIdSet().contains(Long.parseLong(id))) {
-            removeElementByID(id);
-            list.add(UserMagicInteract.getStudyGroup());
-            list.getLast().setId(Long.parseLong(id));
+    public boolean updateElementByID(String[] args) throws CtrlDException, IOException {
+        if (args[1].matches("\\d+") && StudyGroup.getIdSet().contains(Long.parseLong(args[1]))) {
+            if (args.length == 2) list.add(UserMagicInteract.getStudyGroup());
+            else list.add(UserMagicInteract.getStudyGroup(Arrays.copyOfRange(args, 2, args.length)));
+
+            removeElementByID(args[1]);
+            list.getLast().setId(Long.parseLong(args[1]));
             return true;
         } else {
             return false;

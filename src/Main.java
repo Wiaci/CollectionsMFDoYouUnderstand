@@ -1,3 +1,6 @@
+/**
+ * Класс для запуска программы
+ */
 public class Main {
 
     public static void main(String[] args) {
@@ -5,7 +8,7 @@ public class Main {
         if (args.length != 0) {
             dungeonMaster = new CommandLineApp(args[0]);
         } else {
-            dungeonMaster = new CommandLineApp("collectionStorage.xml!");
+            dungeonMaster = new CommandLineApp("collectionStorage.xml");
         }
 
         try {

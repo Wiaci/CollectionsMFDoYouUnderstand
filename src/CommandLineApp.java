@@ -1,6 +1,9 @@
 import java.io.*;
 import java.util.*;
 
+/**
+ * Класс для организации работы приложения
+ */
 public class CommandLineApp {
     private final CollectionMagicInteract collection;
     private UserMagicInteract user;
@@ -13,21 +16,17 @@ public class CommandLineApp {
         this.collectionFilename = collectionFilename;
         collection = file.load(collectionFilename);
         collection.update();
-        user = new UserMagicInteract(collection, new BufferedReader(new InputStreamReader(System.in)));
+        user = new UserMagicInteract(collection, new BufferedReader(new InputStreamReader(System.in)), false);
     }
 
     public void go() throws CtrlDException {
         user.printHello();
         while (!newCommand[0].equals("exit")) {
             newCommand = user.getNewCommand();
-            try {
-                launchCommand(newCommand);
-            } catch (ALotOfFailsException e) {
-                System.out.println("Слишком часто ошибаетесь! Соберитесь с духом и начните заново");
-            }
+            launchCommand(newCommand);
         }
     }
-    private void launchCommand(String[] atomicCommand) throws ALotOfFailsException, CtrlDException {
+    private void launchCommand(String[] atomicCommand) throws CtrlDException {
         switch (atomicCommand[0]) {
             case "" :
             case "exit":
@@ -42,17 +41,26 @@ public class CommandLineApp {
                 user.show();
                 break;
             case "add":
-                user.add();
+                if (atomicCommand.length == 1 || atomicCommand.length == 13) {
+                    user.add(atomicCommand);
+                } else {
+                    System.out.println("Неверный формат ввода команды. Для справки введите \"help\"");
+                }
                 break;
             case "update" :
-                if (atomicCommand.length > 1) {
-                    user.update(atomicCommand[1]);
+                if (atomicCommand.length == 2 || atomicCommand.length == 14) {
+                    user.update(atomicCommand);
                 } else {
                     System.out.println("Неверный формат ввода команды. Для справки введите \"help\"");
                 }
                 break;
             case "add_if_max" :
-                user.add_if_max();
+                if (atomicCommand.length == 2 || atomicCommand.length == 14) {
+                    user.update(atomicCommand);
+                } else {
+                    System.out.println("Неверный формат ввода команды. Для справки введите \"help\"");
+                }
+                user.add_if_max(atomicCommand);
                 break;
             case "info" :
                 user.info();
@@ -60,6 +68,7 @@ public class CommandLineApp {
             case "remove_by_id":
                 if (atomicCommand.length > 1) {
                     user.remove_by_id(atomicCommand[1]);
+                    collection.update();
                 } else {
                     System.out.println("Неверный формат ввода команды. Для справки введите \"help\"");
                 }
@@ -68,7 +77,7 @@ public class CommandLineApp {
                 user.average_of_average_mark();
                 break;
             case "remove_greater" :
-                user.remove_greater();
+                user.remove_greater(atomicCommand);
                 break;
             case "count_less_than_form_of_education" :
                 if (atomicCommand.length > 1) {
@@ -110,32 +119,28 @@ public class CommandLineApp {
     LinkedList<String> listOfScripts = new LinkedList<>();
     HashMap<String, String> problemFiles = new HashMap<>(); // мап с проблемными файлами и их вызовами
 
-    private void execute_script(String filename) throws ALotOfFailsException, CtrlDException {
+    private void execute_script(String filename) throws CtrlDException {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
             listOfScripts.add(filename);
             String newLine;
-            user = new UserMagicInteract(collection, reader);
+            user = new UserMagicInteract(collection, reader, true);
             do {
                 newLine = reader.readLine();
                 if (newLine == null) break;
                 newLine = newLine.trim();
-                if (newLine.startsWith("execute_script") && !listOfScripts.contains(newLine.replaceFirst("execute_script", "").trim())) {
-                    if (newLine.replaceFirst("execute_script", "").trim().isEmpty()) {
-                        listOfScripts.add(newLine.replaceFirst("execute_script", "").trim());
-                    }
-                    launchCommand(newLine.split(" "));
-                } else if (!newLine.startsWith("execute_script")) {
+                if (!newLine.startsWith("execute_script") || !listOfScripts.contains(newLine.replaceFirst("execute_script", "").trim())) {
                     launchCommand(newLine.split(" "));
                 } else problemFiles.put(filename, newLine.replaceFirst("execute_script", "").trim());
+                System.out.println(listOfScripts);
             } while (true);
         } catch (FileNotFoundException e) {
             System.out.println("Такого файла нет");
         } catch (IOException e) {
-            System.out.println("У вас скрипт белый!");
+            System.out.println("Я не знаю как вызвать это исключение");
         } finally {
             if (listOfScripts.size() > 0) listOfScripts.removeLast();
-            user = new UserMagicInteract(collection, new BufferedReader(new InputStreamReader(System.in)));
+            user = new UserMagicInteract(collection, new BufferedReader(new InputStreamReader(System.in)), false);
         }
     }
 }

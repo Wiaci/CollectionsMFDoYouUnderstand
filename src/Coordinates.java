@@ -2,6 +2,9 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
+/**
+ * Класс - координаты группы
+ */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "coordinates")
 public class Coordinates {

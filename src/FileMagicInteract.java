@@ -2,6 +2,9 @@ import javax.xml.bind.*;
 import java.io.*;
 import java.util.Scanner;
 
+/**
+ * Класс для взаимодействия с файлом коллекции
+ */
 public class FileMagicInteract {
 
     public CollectionMagicInteract load(String filename) {
