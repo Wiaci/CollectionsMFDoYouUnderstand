@@ -145,5 +145,36 @@ public class CollectionMagicInteract {
         }
     }
 
+    public static void a(List<? extends Number> l) {
+
+        l.add();
+    }
+
     public CollectionMagicInteract() { }
+}
+
+
+
+class App {
+    public static void main(String[] args) {
+        List<Object> lo = new ArrayList<>();
+        List<Number> ln = new ArrayList<>();
+        List<Double> ld = new ArrayList<>();
+        List<Integer> li = new ArrayList<>();
+
+    }
+
+    public static void a(List<? extends Number> l) {
+        l.add(null);
+        Object el = l.get(0);
+    }
+
+    public static void b(List<? super Number> l) {
+        Integer i = 6;
+        Double j = 0d;
+        Object a = "";
+        l.add(i);
+        l.add(j);
+        Object el = l.get(0);
+    }
 }
